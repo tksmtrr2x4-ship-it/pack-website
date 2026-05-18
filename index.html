@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>High-End Travel Packer - True Apple Glass</title>
+    <title>High-End Travel Packer - Colored Glass</title>
     
     <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -129,7 +129,14 @@
         }
         input:focus, select:focus { outline: none; border-color: var(--accent-gold); background: rgba(255,255,255,0.05); }
 
-        /* Categories Cloud (Replacing the ugly white bar select) */
+        /* Custom Color Picker Styling */
+        input[type="color"] {
+            -webkit-appearance: none; border: none; width: 100%; height: 44px; border-radius: 12px; cursor: pointer; padding: 0; background: none;
+        }
+        input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+        input[type="color"]::-webkit-color-swatch { border: 1px solid var(--glass-border); border-radius: 12px; }
+
+        /* Categories Cloud */
         .category-cloud { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 15px; }
         .cat-tag {
             background: var(--input-bg); border: 1px solid var(--glass-border); padding: 6px 12px;
@@ -138,12 +145,12 @@
         .cat-tag button { background: none; border: none; color: var(--text-muted); padding: 0; cursor: pointer; box-shadow: none; min-width: auto;}
         .cat-tag button:hover { color: var(--danger-red); transform: none; background: none;}
 
-        /* --- THE HALL (Highly Transparent Glass Luggage) --- */
+        /* --- THE HALL (Colored Highly Transparent Glass Luggage) --- */
         .section-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 25px; display: flex; align-items: center; gap: 10px; }
         .luggage-area { display: flex; flex-wrap: wrap; gap: 40px; }
         
         .luggage-wrapper { display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; }
-        .luggage-wrapper:hover { transform: translateY(-10px) scale(1.03); filter: drop-shadow(0 20px 30px rgba(255,193,7,0.15)); }
+        .luggage-wrapper:hover { transform: translateY(-10px) scale(1.03); filter: drop-shadow(0 20px 30px rgba(0,0,0,0.3)); }
 
         .luggage-info-tag {
             background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-bottom: 2px solid var(--accent-gold);
@@ -153,17 +160,13 @@
         body.light-mode .luggage-info-tag { background: rgba(255,255,255,0.5); border-color: rgba(0,0,0,0.1); color: black;}
         .luggage-info-tag h3 { font-size: 1.05rem; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; justify-content: center;}
 
-        /* Visual Luggage Models - Extreme Glass */
+        /* Visual Luggage Models - Extreme Colored Glass (Colors set via JS inline styles) */
         .luggage-body { 
             position: relative; 
-            background: rgba(255, 255, 255, 0.02); /* Extremely transparent */
-            border: 1px solid rgba(255, 255, 255, 0.1); 
-            box-shadow: inset 0 0 20px rgba(255,255,255,0.02), 0 10px 40px rgba(0,0,0,0.3); 
             backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
         }
-        body.light-mode .luggage-body { background: rgba(255,255,255,0.4); border-color: rgba(255,255,255,0.6); }
         
-        .mini-progress { position: absolute; bottom: 15px; left: 15%; width: 70%; height: 6px; background: rgba(0,0,0,0.3); border-radius: 3px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05);}
+        .mini-progress { position: absolute; bottom: 15px; left: 15%; width: 70%; height: 6px; background: rgba(0,0,0,0.3); border-radius: 3px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); z-index: 5;}
         .mini-progress-fill { background: var(--accent-gold); height: 100%; transition: 0.4s;}
 
         .luggage-type-trolley .luggage-body { border-radius: 18px; }
@@ -175,8 +178,19 @@
         .koffer-strap { position: absolute; top: 0; left: 30%; width: 10%; height: 100%; background: rgba(255,255,255,0.05); border-left: 1px solid rgba(255,255,255,0.08); border-right: 1px solid rgba(255,255,255,0.08);}
         .koffer-strap-2 { left: 60%; }
 
+        /* RUCKSACK REDESIGN: Rounder, Top Handle, Nice Front Pocket. NO WEIRD SIDE RECTANGLES! */
         .luggage-type-rucksack .luggage-body { border-radius: 40% 40% 15% 15% / 25% 25% 10% 10%; }
-        .luggage-type-rucksack .luggage-body::before { content: ''; position: absolute; top: 10%; left: -12px; width: calc(100% + 24px); height: 80%; border-left: 8px solid rgba(255,255,255,0.05); border-right: 8px solid rgba(255,255,255,0.05); border-radius: 20px; z-index: -1; }
+        /* Top Loop Handle */
+        .luggage-type-rucksack .luggage-body::before { 
+            content: ''; position: absolute; top: -14px; left: 50%; transform: translateX(-50%); 
+            width: 25%; height: 14px; border: 4px solid rgba(255,255,255,0.15); border-bottom: none; border-radius: 10px 10px 0 0; 
+        }
+        /* Elegant front curved pocket */
+        .luggage-type-rucksack .luggage-body::after { 
+            content: ''; position: absolute; top: 20%; left: 15%; width: 70%; height: 50%; 
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 20px 20px 15px 15px; 
+            box-shadow: inset 0 4px 10px rgba(255,255,255,0.03); 
+        }
 
         /* --- THE MODAL (Glass) --- */
         .modal-overlay {
@@ -271,7 +285,12 @@
                 <!-- Create Luggage -->
                 <div class="glass-panel" style="margin-bottom: 25px;">
                     <div class="section-title" style="font-size: 1.1rem; margin-bottom: 15px;"><i class="fa-solid fa-box-open"></i> Neues Gepäck</div>
-                    <div class="form-group"><label>Typ</label><select id="luggageType"><option value="koffer">Koffer</option><option value="trolley">Trolley</option><option value="rucksack">Rucksack</option></select></div>
+                    
+                    <div class="row-group">
+                        <div class="form-group" style="flex: 2;"><label>Typ</label><select id="luggageType"><option value="koffer">Koffer</option><option value="trolley">Trolley</option><option value="rucksack">Rucksack</option></select></div>
+                        <div class="form-group" style="flex: 1;"><label>Farbe</label><input type="color" id="luggageColor" value="#ffffff" title="Gepäckfarbe wählen"></div>
+                    </div>
+
                     <div class="form-group"><label>Name</label><input type="text" id="luggageName" placeholder="Z.B. Barcelona Trip"></div>
                     <div class="row-group">
                         <div class="form-group"><label>Breite (cm)</label><input type="number" id="luggageW" value="40"></div>
@@ -280,16 +299,14 @@
                     <button class="primary" style="width: 100%; justify-content: center; padding: 14px; margin-top: 10px;" onclick="addLuggage()"><i class="fa-solid fa-plus"></i> Hinzufügen</button>
                 </div>
 
-                <!-- Categories (Now as Tags instead of Select) -->
+                <!-- Categories -->
                 <div class="glass-panel">
                     <div class="section-title" style="font-size: 1.1rem; margin-bottom: 15px;"><i class="fa-solid fa-tags"></i> Kategorien</div>
                     <div style="display: flex; gap: 10px;">
                         <input type="text" id="newCategory" placeholder="Neue Kategorie...">
                         <button class="primary icon-btn" onclick="addCategory()"><i class="fa-solid fa-plus"></i></button>
                     </div>
-                    <div class="category-cloud" id="categoryCloud">
-                        <!-- Filled by JS -->
-                    </div>
+                    <div class="category-cloud" id="categoryCloud"></div>
                 </div>
             </div>
 
@@ -297,7 +314,7 @@
             <div class="right-column">
                 <div class="section-title" style="margin-top: 10px; margin-left: 10px;"><i class="fa-solid fa-warehouse"></i> Packhalle</div>
                 <p style="margin-left: 10px; color: var(--text-muted); margin-bottom: 30px; font-size: 0.9rem;">
-                    <i class="fa-solid fa-circle-info" style="color: var(--accent-gold);"></i> <b>Voice-Tipp:</b> Drücke oben auf das Mikrofon und sage z.B.: <i>"Packe eine Sonnenbrille in Nizza-Barcelona"</i>.
+                    <i class="fa-solid fa-circle-info" style="color: var(--accent-gold);"></i> <b>Voice-Tipp:</b> Drücke oben auf das Mikrofon und sage z.B.: <i>"Packe eine Sonnenbrille in Nizza"</i>.
                 </p>
                 <div class="luggage-area" id="hallArea"></div>
             </div>
@@ -340,6 +357,18 @@
             updateCategoryUI(); updateDashboard(); renderHall();
         };
 
+        // --- HELPER: Hex to RGBA for extreme Glass colors ---
+        function hexToRgbA(hex, alpha){
+            let c;
+            if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)){
+                c= hex.substring(1).split('');
+                if(c.length === 3){ c= [c[0], c[0], c[1], c[1], c[2], c[2]]; }
+                c= '0x'+c.join('');
+                return 'rgba('+[(c>>16)&255, (c>>8)&255, c&255].join(',')+','+alpha+')';
+            }
+            return `rgba(255,255,255,${alpha})`; // fallback
+        }
+
         // --- TOAST SYSTEM (iOS Notification Style) ---
         function showToast(message, type = 'success') {
             const container = document.getElementById('toastContainer');
@@ -359,7 +388,7 @@
             }, 3500);
         }
 
-        // --- THEME TOGGLE (Tag/Nacht) ---
+        // --- THEME TOGGLE ---
         function toggleTheme() {
             const body = document.body;
             const btn = document.getElementById('themeBtn');
@@ -406,14 +435,12 @@
             
             // Clean up filler words
             text = text.replace(/bitte/g, '').replace(/einmal/g, '').replace(/hinzu$/i, '').trim();
-            
-            // Remove typical action verbs at the start
             text = text.replace(/^(füge|packe|tu|lege|schreibe)\s+(eine|einen|ein|den|die|das)?\s*/i, '');
 
             let itemName = text;
             let luggageQuery = "";
 
-            // Try to split the sentence by prepositions (in, zu, auf)
+            // Split sentence by prepositions
             const splitMatch = text.match(/(.+?)\s+(in den|in die|in das|in|zu dem|zu der|zum|zur|zu|auf den|auf)\s+(.+)/i);
             
             if(splitMatch) {
@@ -421,40 +448,33 @@
                 luggageQuery = splitMatch[3].trim();
             }
 
-            if(!itemName) {
-                showToast("Nichts verstanden.", "error"); return;
-            }
+            if(!itemName) { showToast("Nichts verstanden.", "error"); return; }
 
-            // Capitalize first letter of item
+            // Capitalize first letter
             itemName = itemName.charAt(0).toUpperCase() + itemName.slice(1);
 
             let targetLuggage = null;
 
-            // Fuzzy matching for luggage if the user specified one
+            // Fuzzy match luggage name
             if(luggageQuery) {
                 const searchWords = luggageQuery.split(' ');
                 targetLuggage = luggages.find(l => {
                     const lName = l.name.toLowerCase();
-                    // Check if any word from the speech matches the luggage name
                     return searchWords.some(word => word.length > 2 && lName.includes(word));
                 });
             }
             
-            // If specific luggage not found, or user didn't specify one -> use the very first luggage
-            if(!targetLuggage && luggages.length > 0) {
-                targetLuggage = luggages[0];
-            }
+            // Fallback: First luggage
+            if(!targetLuggage && luggages.length > 0) targetLuggage = luggages[0];
 
             if(targetLuggage) {
-                // Determine Category (Default to first)
                 let targetCat = categories[0];
-                if(categories.includes("Zubehör")) targetCat = "Zubehör"; // Better default if exists
+                if(categories.includes("Zubehör")) targetCat = "Zubehör"; 
 
                 targetLuggage.items.push({ id: Date.now().toString(), name: itemName, cat: targetCat, packed: false });
                 showToast(`"${itemName}" in ${targetLuggage.name} gepackt`, "success");
                 renderHall(); updateDashboard();
                 
-                // If modal is currently open and it's the target luggage, re-render it
                 if(currentOpenLuggageId === targetLuggage.id) renderModalContent();
             } else {
                 showToast("Fehler beim Packen.", "error");
@@ -470,7 +490,7 @@
             document.getElementById('globalProgressBar').style.width = `${percent}%`;
         }
 
-        // --- CATEGORIES (Tags Cloud UI instead of Select) ---
+        // --- CATEGORIES (Tags Cloud UI) ---
         function updateCategoryUI() {
             const cloud = document.getElementById('categoryCloud'); 
             const select = document.getElementById('modalCatSelect');
@@ -478,14 +498,12 @@
             cloud.innerHTML = ''; select.innerHTML = '';
             
             categories.forEach(cat => {
-                // Build the visual tags cloud
                 cloud.innerHTML += `
                     <div class="cat-tag">
                         ${cat}
                         <button onclick="removeCategory('${cat}')" title="Löschen"><i class="fa-solid fa-xmark"></i></button>
                     </div>
                 `;
-                // Build the select only for the modal add form
                 select.innerHTML += `<option value="${cat}">${cat}</option>`;
             });
         }
@@ -511,12 +529,15 @@
         function addLuggage() {
             const name = document.getElementById('luggageName').value.trim() || "Mein Gepäck";
             const type = document.getElementById('luggageType').value;
+            const color = document.getElementById('luggageColor').value; // NEU: Farbe
             const w = parseInt(document.getElementById('luggageW').value) || 40;
             const h = parseInt(document.getElementById('luggageH').value) || 55;
 
-            luggages.push({ id: Date.now().toString(), type, name, w, h, weight: 10, deadline: '', items: [] });
+            luggages.push({ id: Date.now().toString(), type, name, color, w, h, weight: 10, deadline: '', items: [] });
             document.getElementById('luggageName').value = ''; renderHall(); updateDashboard();
+            showToast(`Gepäck "${name}" erstellt!`);
         }
+
         function deleteCurrentLuggage() {
             if(confirm("Gepäckstück inkl. Inhalt wirklich löschen?")) {
                 luggages = luggages.filter(l => l.id !== currentOpenLuggageId);
@@ -525,7 +546,7 @@
             }
         }
 
-        // --- RENDER HALL (Extreme Glass Transparency) ---
+        // --- RENDER HALL (Colored Glass Transparency) ---
         function renderHall() {
             const area = document.getElementById('hallArea');
             area.innerHTML = '';
@@ -549,10 +570,25 @@
                 let details = '';
                 if(l.type === 'koffer') details = '<div class="koffer-strap"></div><div class="koffer-strap-2"></div>';
 
+                // --- COLORED GLASS LOGIC ---
+                // Falls keine Farbe aus altem Save, nimm Weiß. Erzeuge transparente Glas-Werte daraus.
+                const baseColor = l.color || '#ffffff';
+                const glassBg = hexToRgbA(baseColor, 0.08); 
+                const glassBorder = hexToRgbA(baseColor, 0.3);
+                const glassShadow = hexToRgbA(baseColor, 0.05);
+
                 const html = `
                     <div class="luggage-wrapper luggage-type-${l.type}" onclick="openModal('${l.id}')">
                         <div class="luggage-info-tag"><h3><i class="fa-solid ${icon}"></i> ${l.name}</h3><span>${p}/${t} Items</span></div>
-                        <div class="luggage-body" style="width:${calcWidth}px; height:${calcHeight}px;">
+                        
+                        <!-- Dynamische Color-Styles werden hier inline appliziert -->
+                        <div class="luggage-body" style="
+                            width:${calcWidth}px; 
+                            height:${calcHeight}px;
+                            background: linear-gradient(135deg, ${glassBg}, rgba(255,255,255,0.01));
+                            border-color: ${glassBorder};
+                            box-shadow: inset 0 2px 15px ${glassShadow}, 0 10px 40px rgba(0,0,0,0.3);
+                        ">
                             ${details}
                             <div class="mini-progress"><div class="mini-progress-fill" style="width:${percent}%"></div></div>
                         </div>
@@ -582,7 +618,6 @@
 
             if(lug.items.length === 0) { listContainer.innerHTML = `<p style="text-align:center; color:var(--text-muted); margin: 40px 0;">Koffer ist noch leer.</p>`; return; }
 
-            // Group by category, even those not in the main list anymore (to preserve data)
             const allUsedCats = [...new Set(lug.items.map(i => i.cat))];
             
             allUsedCats.forEach(cat => {
