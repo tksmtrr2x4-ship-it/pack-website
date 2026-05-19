@@ -413,7 +413,7 @@
             else { btn.innerHTML = '<i class="fa-solid fa-moon"></i>'; localStorage.setItem('theme', 'dark'); }
         }
 
-        // --- NEWS API (RSS to JSON) ---
+       // --- NEWS API (RSS to JSON) ---
         async function fetchNews() {
             const city = document.getElementById('newsCity').value.trim();
             if(!city) return;
@@ -422,25 +422,23 @@
             const container = document.getElementById('newsListContainer');
             
             try {
-                // Fetch Google News RSS via public RSS2JSON API
-                const rssUrl = encodeURIComponent(`https://news.google.com/rss/search?q=${city}&hl=de&gl=DE&ceid=DE:de`);
+                // News-Query optimiert: Schließt Sport/Fußball aus und fokussiert auf relevante Infos
+                const query = encodeURIComponent(`${city} -sport -fussball -fußball`);
+                const rssUrl = encodeURIComponent(`https://news.google.com/rss/search?q=${query}&hl=de&gl=DE&ceid=DE:de`);
                 const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${rssUrl}`);
                 const data = await res.json();
 
                 if(data.status === 'ok' && data.items && data.items.length > 0) {
                     container.innerHTML = '';
-                    // Take top 3 news
                     for(let i=0; i<3; i++) {
                         if(data.items[i]) {
                             const item = data.items[i];
-                            // Clean up source name usually appended to title "- Source"
                             let title = item.title;
                             let source = "News";
                             if(title.includes(" - ")) {
                                 const parts = title.split(" - ");
                                 source = parts.pop(); title = parts.join(" - ");
                             }
-                            
                             container.innerHTML += `
                                 <a href="${item.link}" target="_blank" class="news-card">
                                     <div class="news-title">${title}</div>
@@ -450,7 +448,7 @@
                         }
                     }
                 } else {
-                    container.innerHTML = `<p style="font-size:0.85rem; color:var(--text-muted); text-align:center;">Keine News gefunden.</p>`;
+                    container.innerHTML = `<p style="font-size:0.85rem; color:var(--text-muted); text-align:center;">Keine relevanten News gefunden.</p>`;
                 }
             } catch(e) {
                 container.innerHTML = `<p style="font-size:0.85rem; color:var(--danger-red); text-align:center;">Laden fehlgeschlagen.</p>`;
@@ -458,6 +456,7 @@
             btn.innerHTML = `<i class="fa-solid fa-globe"></i>`;
         }
 
+        // --- WEATHER & KI ---
         // --- WEATHER & KI ---
         async function fetchWeather() {
             const city = document.getElementById('weatherCity').value.trim();
@@ -468,7 +467,8 @@
                 const geoData = await geoRes.json();
                 if(!geoData.results) { showToast("Ort nicht gefunden!", "error"); btn.innerHTML = `<i class="fa-solid fa-magnifying-glass"></i>`; return; }
                 const lat = geoData.results[0].latitude; const lon = geoData.results[0].longitude;
-                const wRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=auto`);
+                // Exakte 5-Tage Vorhersage abrufen
+                const wRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=auto&forecast_days=5`);
                 const wData = await wRes.json();
                 renderForecastGraph(wData.daily); generateSmartSuggestions(wData.daily);
                 document.getElementById('forecastContainer').style.display = 'block';
@@ -479,8 +479,11 @@
         function renderForecastGraph(daily) {
             const chart = document.getElementById('forecastChart'); chart.innerHTML = '';
             const days = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
-            const globalMax = Math.max(...daily.temperature_2m_max.slice(0, 5));
-            const globalMin = Math.min(...daily.temperature_2m_min.slice(0, 5));
+            
+            // Korrekte Skalierung für die Temperatur-Balken (verhindert falsche optische Höhen)
+            const globalMax = Math.max(...daily.temperature_2m_max);
+            const globalMin = Math.min(...daily.temperature_2m_min);
+            const tempRange = Math.max(globalMax - Math.min(globalMin, 0), 10); // Minimum Range von 10 Grad für Optik
             
             for(let i=0; i<5; i++) {
                 const date = new Date(daily.time[i]); const dayName = i === 0 ? 'Heute' : days[date.getDay()];
@@ -494,7 +497,9 @@
                 else if(code <= 77) { icon = 'fa-snowflake'; color = '#fff'; }
                 else if(code >= 95) { icon = 'fa-cloud-bolt'; color = '#ffeb3b'; }
 
-                const heightPercent = Math.max((max / globalMax) * 100, 10);
+                // Echte mathematische Prozent-Berechnung für den Balken-Graphen
+                const heightPercent = Math.max(((max - Math.min(globalMin, 0)) / tempRange) * 100, 10);
+
                 chart.innerHTML += `<div class="chart-col"><span class="chart-temp">${max}° <span style="color:var(--text-muted); font-size: 0.7rem;">${min}°</span></span><div class="bar-wrapper"><div class="temp-bar" style="height: 0%;" data-target="${heightPercent}%"></div></div><i class="fa-solid ${icon} chart-icon" style="color: ${color}"></i><span class="chart-label">${dayName}</span><span style="font-size: 0.65rem; color: #4aa5ff;">${rain}% 🌧</span></div>`;
             }
             setTimeout(() => { document.querySelectorAll('.temp-bar').forEach(bar => { bar.style.height = bar.getAttribute('data-target'); }); }, 100);
