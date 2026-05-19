@@ -598,33 +598,102 @@
 
 
         // --- VOICE COMMAND ---
+        // --- VOICE COMMAND (Continuous & Auto-Category) ---
+        let voiceRecognition = null;
+        let isRecording = false;
+
         function startVoiceCommand() {
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
             if (!SpeechRecognition) { showToast("Browser unterstützt kein Voice.", "error"); return; }
             if(luggages.length === 0) { showToast("Bitte erstelle zuerst ein Gepäckstück!", "error"); return; }
-            const recognition = new SpeechRecognition(); recognition.lang = 'de-DE'; recognition.interimResults = false; recognition.maxAlternatives = 1;
-            const btn = document.getElementById('voiceBtn'); btn.classList.add('recording'); btn.innerHTML = '<i class="fa-solid fa-ear-listen"></i> Höre zu...';
-            recognition.start();
-            recognition.onresult = (event) => {
-                let text = event.results[0][0].transcript.toLowerCase().trim().replace(/bitte/g, '').replace(/einmal/g, '').replace(/hinzu$/i, '').trim();
-                text = text.replace(/^(füge|packe|tu|lege|schreibe)\s+(eine|einen|ein|den|die|das)?\s*/i, '');
-                let itemName = text; let luggageQuery = "";
-                const splitMatch = text.match(/(.+?)\s+(in den|in die|in das|in|zu dem|zu der|zum|zur|zu|auf den|auf)\s+(.+)/i);
-                if(splitMatch) { itemName = splitMatch[1].trim(); luggageQuery = splitMatch[3].trim(); }
-                if(!itemName) { showToast("Nichts verstanden.", "error"); return; }
-                itemName = itemName.charAt(0).toUpperCase() + itemName.slice(1);
-                let targetLuggage = null;
-                if(luggageQuery) { const searchWords = luggageQuery.split(' '); targetLuggage = luggages.find(l => searchWords.some(w => w.length > 2 && l.name.toLowerCase().includes(w))); }
-                if(!targetLuggage && luggages.length > 0) targetLuggage = luggages[0];
-                if(targetLuggage) {
-                    targetLuggage.items.push({ id: Date.now().toString(), name: itemName, cat: categories[0], packed: false });
-                    showToast(`"${itemName}" in ${targetLuggage.name} gepackt`);
-                    renderHall(); updateDashboard(); if(currentOpenLuggageId === targetLuggage.id) renderModalContent();
-                } else { showToast("Gepäck nicht gefunden.", "error"); }
+
+            const btn = document.getElementById('voiceBtn');
+
+            // Wenn es läuft: Manuell stoppen
+            if (isRecording) {
+                isRecording = false;
+                if(voiceRecognition) voiceRecognition.stop();
+                btn.classList.remove('recording'); 
+                btn.innerHTML = '<i class="fa-solid fa-microphone"></i> Sprachbefehl';
+                showToast("Diktier-Modus gestoppt.", "info");
+                return;
+            }
+
+            // Neu starten (Dauerhaftes Zuhören)
+            voiceRecognition = new SpeechRecognition();
+            voiceRecognition.lang = 'de-DE'; 
+            voiceRecognition.interimResults = false; 
+            voiceRecognition.maxAlternatives = 1;
+            voiceRecognition.continuous = true; // Der Schalter für Dauer-Zuhören
+
+            isRecording = true;
+            btn.classList.add('recording'); 
+            btn.innerHTML = '<i class="fa-solid fa-ear-listen"></i> Diktieren beenden';
+            showToast("Hört dauerhaft zu. Sprich deine Liste ein!", "info");
+
+            voiceRecognition.start();
+
+            voiceRecognition.onresult = (event) => {
+                // Bei Continuous nehmen wir das jeweils aktuellste Satz-Segment
+                const currentResultIndex = event.results.length - 1;
+                const transcript = event.results[currentResultIndex][0].transcript;
+                processSmartVoiceCommand(transcript);
             };
-            recognition.onspeechend = () => recognition.stop();
-            recognition.onend = () => { btn.classList.remove('recording'); btn.innerHTML = '<i class="fa-solid fa-microphone"></i> Sprachbefehl'; };
-            recognition.onerror = (e) => showToast("Mikrofonfehler", "error");
+
+            voiceRecognition.onend = () => { 
+                // Auto-Restart, falls der Browser nach Stille automatisch abschaltet, wir aber nicht manuell gestoppt haben
+                if(isRecording) {
+                    voiceRecognition.start(); 
+                } else {
+                    btn.classList.remove('recording'); 
+                    btn.innerHTML = '<i class="fa-solid fa-microphone"></i> Sprachbefehl';
+                }
+            };
+            
+            voiceRecognition.onerror = (e) => {
+                if (e.error !== 'no-speech') {
+                    showToast("Mikrofonfehler: " + e.error, "error");
+                    isRecording = false;
+                }
+            };
+        }
+
+        function processSmartVoiceCommand(transcript) {
+            let text = transcript.toLowerCase().trim().replace(/bitte/g, '').replace(/einmal/g, '').replace(/hinzu$/i, '').trim();
+            text = text.replace(/^(füge|packe|tu|lege|schreibe)\s+(eine|einen|ein|den|die|das)?\s*/i, '');
+            
+            let itemName = text; let luggageQuery = "";
+            const splitMatch = text.match(/(.+?)\s+(in den|in die|in das|in|zu dem|zu der|zum|zur|zu|auf den|auf)\s+(.+)/i);
+            if(splitMatch) { itemName = splitMatch[1].trim(); luggageQuery = splitMatch[3].trim(); }
+            
+            if(!itemName) return; // Stumm abbrechen, damit der Dauer-Modus nicht mit Fehlern nervt
+
+            itemName = itemName.charAt(0).toUpperCase() + itemName.slice(1);
+            let targetLuggage = null;
+
+            if(luggageQuery) { 
+                const searchWords = luggageQuery.split(' '); 
+                targetLuggage = luggages.find(l => searchWords.some(w => w.length > 2 && l.name.toLowerCase().includes(w))); 
+            }
+            if(!targetLuggage && luggages.length > 0) targetLuggage = luggages[0];
+
+            if(targetLuggage) {
+                // Automatische Kategorisierung anhand von Stichwörtern
+                let autoCat = categories[0];
+                const lowerItem = itemName.toLowerCase();
+                if(/creme|bürste|dusch|deo|shampoo|parfüm|pflege/.test(lowerItem) && categories.includes("Hygiene")) autoCat = "Hygiene";
+                else if(/kabel|laptop|handy|pad|powerbank|stecker|kopfhörer/.test(lowerItem) && categories.includes("Elektronik")) autoCat = "Elektronik";
+                else if(/pass|ticket|ausweis|karte|geld/.test(lowerItem) && categories.includes("Dokumente")) autoCat = "Dokumente";
+                else if(/hose|shirt|hemd|jacke|socken|schuhe|kleid/.test(lowerItem) && categories.includes("Kleidung")) autoCat = "Kleidung";
+
+                targetLuggage.items.push({ id: Date.now().toString(), name: itemName, cat: autoCat, packed: false });
+                showToast(`"${itemName}" in ${targetLuggage.name} gepackt`);
+                
+                renderHall(); updateDashboard(); 
+                if(currentOpenLuggageId === targetLuggage.id) renderModalContent();
+            } else { 
+                showToast("Gepäck nicht gefunden.", "error"); 
+            }
         }
 
         // --- DASHBOARD ---
