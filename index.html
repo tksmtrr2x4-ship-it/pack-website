@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>High-End Travel Packer - Ultimate Edition</title>
+    <title>High-End Travel Packer - Smart Transfer Edition</title>
     
     <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -59,6 +59,7 @@
         .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: rgba(255, 193, 7, 0.15); animation-delay: 0s; }
         .blob-2 { bottom: -20%; right: -10%; width: 60vw; height: 60vw; background: rgba(46, 160, 67, 0.1); animation-delay: -5s; }
         .blob-3 { top: 40%; left: 60%; width: 40vw; height: 40vw; background: rgba(56, 110, 200, 0.1); animation-delay: -10s; }
+        .blob-4 { bottom: 10%; left: 10%; width: 30vw; height: 30vw; background: rgba(160, 46, 150, 0.1); animation-delay: -15s; }
 
         @keyframes float { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(5%, 10%) scale(1.1); } }
 
@@ -81,8 +82,8 @@
         .mic-btn { background: rgba(74, 165, 255, 0.1); color: #4aa5ff; border-color: rgba(74, 165, 255, 0.3); }
         body.light-mode .mic-btn { background: rgba(0, 102, 204, 0.1); color: #0066cc; }
         .mic-btn.recording { animation: pulseMic 1.5s infinite; background: var(--danger-red); color: white; border-color: var(--danger-red);}
-
         @keyframes pulseMic { 0% { box-shadow: 0 0 0 0 rgba(218, 54, 51, 0.7); } 70% { box-shadow: 0 0 0 12px rgba(218, 54, 51, 0); } 100% { box-shadow: 0 0 0 0 rgba(218, 54, 51, 0); } }
+
         .hidden { display: none; }
 
         /* --- TOASTS --- */
@@ -113,9 +114,10 @@
         .cat-tag button { background: none; border: none; color: var(--text-muted); padding: 0; cursor: pointer; box-shadow: none; min-width: auto;}
         .cat-tag button:hover { color: var(--danger-red); background: none;}
 
-        /* --- WEATHER DASHBOARD (mit Graphen) --- */
-        .weather-dashboard { margin-bottom: 30px; }
-        .weather-search { display: flex; gap: 10px; margin-bottom: 20px; }
+        /* --- WEATHER & NEWS DASHBOARD --- */
+        .weather-dashboard { margin-bottom: 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;}
+        .dash-col { display: flex; flex-direction: column; }
+        .search-row { display: flex; gap: 10px; margin-bottom: 20px; }
         
         .forecast-chart { display: flex; justify-content: space-between; align-items: flex-end; height: 140px; margin-top: 25px; padding-bottom: 10px; border-bottom: 1px solid var(--glass-border); }
         .chart-col { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; flex: 1; height: 100%; position: relative; gap: 5px;}
@@ -130,6 +132,13 @@
         .s-tag { background: rgba(46, 160, 67, 0.15); border: 1px solid rgba(46, 160, 67, 0.3); color: var(--success-green); padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: 0.2s; margin: 5px 5px 0 0;}
         .s-tag:hover { background: rgba(46, 160, 67, 0.3); }
 
+        /* News Cards */
+        .news-list { display: flex; flex-direction: column; gap: 10px; margin-top: 10px;}
+        .news-card { background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); padding: 12px 15px; border-radius: 12px; display: flex; flex-direction: column; gap: 5px; text-decoration: none; color: var(--text-main); transition: 0.2s;}
+        .news-card:hover { background: rgba(0,0,0,0.4); transform: translateX(4px); border-color: rgba(255,255,255,0.2);}
+        .news-title { font-size: 0.85rem; font-weight: 600; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .news-source { font-size: 0.7rem; color: var(--accent-gold); display: flex; justify-content: space-between;}
+
         /* --- THE HALL (Luggage) --- */
         .section-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 25px; display: flex; align-items: center; gap: 10px; }
         .luggage-area { display: flex; flex-wrap: wrap; gap: 40px; }
@@ -141,9 +150,7 @@
         body.light-mode .luggage-info-tag { background: rgba(255,255,255,0.5); border-color: rgba(0,0,0,0.1); color: black;}
         .luggage-info-tag h3 { font-size: 1.05rem; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; justify-content: center;}
 
-        /* Visual Luggage Models - Extreme Colored Glass */
         .luggage-body { position: relative; backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); }
-        
         .mini-progress { position: absolute; bottom: 15px; left: 15%; width: 70%; height: 6px; background: rgba(0,0,0,0.3); border-radius: 3px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); z-index: 5;}
         .mini-progress-fill { background: var(--accent-gold); height: 100%; transition: 0.4s;}
 
@@ -183,6 +190,7 @@
         .modal-footer { padding: 20px 25px; border-top: 1px solid var(--glass-border); background: rgba(0,0,0,0.3); display: flex; gap: 10px; }
 
         @media (max-width: 900px) {
+            .weather-dashboard { grid-template-columns: 1fr; }
             .app-container { padding: 10px 10px 80px 10px; }
             header { flex-direction: column; gap: 15px; padding: 15px; border-radius: 20px; position: relative; top: 0; margin-bottom: 20px;}
             .header-actions { justify-content: center; width: 100%;}
@@ -197,17 +205,17 @@
 </head>
 <body>
 
-    <!-- Ambient Blobs -->
     <div class="ambient-blob blob-1"></div>
     <div class="ambient-blob blob-2"></div>
     <div class="ambient-blob blob-3"></div>
+    <div class="ambient-blob blob-4"></div>
 
     <div id="toastContainer"></div>
 
     <div class="app-container">
         <!-- HEADER -->
         <header class="glass-panel" style="padding: 15px 25px;">
-            <div class="logo"><i class="fa-solid fa-plane-departure"></i> iOS Packer</div>
+            <div class="logo"><i class="fa-solid fa-plane-departure"></i> Packer AI</div>
             <div class="header-actions">
                 <button class="icon-btn" onclick="toggleTheme()" title="Tag/Nacht" id="themeBtn"><i class="fa-solid fa-moon"></i></button>
                 <button class="mic-btn" onclick="startVoiceCommand()" id="voiceBtn" title="KI Sprachsteuerung"><i class="fa-solid fa-microphone"></i> Sprachbefehl</button>
@@ -231,6 +239,15 @@
                     <div style="height: 10px; background: rgba(0,0,0,0.3); border-radius: 5px; overflow: hidden; border: 1px solid var(--glass-border);">
                         <div id="globalProgressBar" style="height: 100%; width: 0%; background: linear-gradient(90deg, var(--success-green), #4add6d); transition: 0.5s;"></div>
                     </div>
+                </div>
+
+                <!-- NEW: SMART TRANSFER ASSISTANT -->
+                <div class="glass-panel" style="margin-bottom: 25px; border-color: rgba(160, 46, 150, 0.4);">
+                    <div class="section-title" style="font-size: 1.1rem; margin-bottom: 10px; color: #d470df;"><i class="fa-solid fa-shuffle"></i> Smart Transfer</div>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 15px; line-height: 1.4;">Findet identische Gegenstände in zwei Koffern und schnürt automatisch ein Fluggepäck.</p>
+                    <button style="width: 100%; justify-content: center; background: rgba(160, 46, 150, 0.2); color: #e49ee9; border-color: rgba(160, 46, 150, 0.5);" onclick="openTransferModal()">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Jetzt verknüpfen
+                    </button>
                 </div>
 
                 <div class="glass-panel" style="margin-bottom: 25px;">
@@ -264,26 +281,37 @@
             <!-- RIGHT COLUMN -->
             <div class="right-column">
                 
-                <!-- NEW: Weather Dashboard with Graphs -->
+                <!-- Weather & News Dashboard -->
                 <div class="glass-panel weather-dashboard">
-                    <div class="section-title"><i class="fa-solid fa-satellite-dish" style="color: var(--accent-gold);"></i> Live Wetter & KI Assistent</div>
-                    <div class="weather-search">
-                        <input type="text" id="weatherCity" placeholder="Reiseziel eingeben (z.B. Rom)..." onkeypress="if(event.key === 'Enter') fetchWeather()">
-                        <button class="primary" onclick="fetchWeather()" id="weatherBtn"><i class="fa-solid fa-magnifying-glass"></i> Abrufen</button>
-                    </div>
-                    
-                    <div id="forecastContainer" style="display: none;">
-                        <div class="forecast-chart" id="forecastChart">
-                            <!-- JS will inject the bar chart here -->
+                    <!-- Weather Col -->
+                    <div class="dash-col" style="border-right: 1px solid var(--glass-border); padding-right: 20px;">
+                        <div class="section-title" style="font-size:1.1rem;"><i class="fa-solid fa-satellite-dish" style="color: var(--accent-gold);"></i> Live Wetter & KI</div>
+                        <div class="search-row">
+                            <input type="text" id="weatherCity" placeholder="Ort (z.B. Rom)..." onkeypress="if(event.key === 'Enter') fetchWeather()">
+                            <button class="primary icon-btn" onclick="fetchWeather()" id="weatherBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
                         </div>
-                        <div class="smart-suggestions" id="smartSuggestions">
-                            <label><i class="fa-solid fa-wand-magic-sparkles" style="color: var(--accent-gold);"></i> KI Pack-Vorschläge (Klick zum Packen):</label>
-                            <div class="category-cloud" id="suggestionTags"></div>
+                        <div id="forecastContainer" style="display: none;">
+                            <div class="forecast-chart" id="forecastChart"></div>
+                            <div class="smart-suggestions" id="smartSuggestions">
+                                <label style="font-size: 0.7rem;"><i class="fa-solid fa-wand-magic-sparkles" style="color: var(--accent-gold);"></i> Pack-Vorschläge (Klick):</label>
+                                <div class="category-cloud" id="suggestionTags"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- News Col -->
+                    <div class="dash-col" style="padding-left: 10px;">
+                        <div class="section-title" style="font-size:1.1rem;"><i class="fa-regular fa-newspaper" style="color: #4aa5ff;"></i> Lokale News</div>
+                        <div class="search-row">
+                            <input type="text" id="newsCity" placeholder="Ort für News..." onkeypress="if(event.key === 'Enter') fetchNews()">
+                            <button class="primary icon-btn" style="background: linear-gradient(135deg, #4aa5ff, #0066cc);" onclick="fetchNews()" id="newsBtn"><i class="fa-solid fa-globe"></i></button>
+                        </div>
+                        <div class="news-list" id="newsListContainer">
+                            <p style="font-size:0.85rem; color:var(--text-muted); text-align:center; margin-top:20px;">News zu deinem Reiseziel laden.</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="section-title" style="margin-top: 40px; margin-left: 10px;"><i class="fa-solid fa-warehouse"></i> Packhalle</div>
+                <div class="section-title" style="margin-top: 20px; margin-left: 10px;"><i class="fa-solid fa-warehouse"></i> Packhalle</div>
                 <div class="luggage-area" id="hallArea"></div>
             </div>
         </main>
@@ -300,7 +328,6 @@
                 </div>
             </div>
             <div class="modal-body">
-                <!-- Info Bar in Modal -->
                 <div style="display: flex; gap: 20px; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid var(--glass-border); font-size: 0.9rem; color: var(--text-muted);">
                     <span id="modalDim"></span>
                     <span id="modalWeight"></span>
@@ -316,6 +343,41 @@
         </div>
     </div>
 
+    <!-- TRANSFER MODAL -->
+    <div class="modal-overlay" id="transferModal">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <h2 style="color: #d470df; font-size: 1.3rem;"><i class="fa-solid fa-shuffle"></i> Smart Transfer</h2>
+                <button class="close-modal" onclick="closeModal('transferModal')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px;">Wähle zwei Gepäckstücke. Identische Items werden automatisch in ein neues Fluggepäck verschoben.</p>
+                <div class="form-group">
+                    <label>Ort A (Gepäck 1)</label>
+                    <select id="transferA"></select>
+                </div>
+                <div class="form-group" style="text-align: center; color: var(--text-muted);"><i class="fa-solid fa-link"></i></div>
+                <div class="form-group">
+                    <label>Ort B (Gepäck 2)</label>
+                    <select id="transferB"></select>
+                </div>
+                <hr style="border:0; border-top: 1px solid var(--glass-border); margin: 25px 0;">
+                <div class="form-group">
+                    <label>Neues Fluggepäck erstellen</label>
+                    <div style="display: flex; gap: 10px;">
+                        <select id="transferType" style="flex: 2;"><option value="trolley">Trolley</option><option value="rucksack">Rucksack</option><option value="koffer">Koffer</option></select>
+                        <input type="color" id="transferColor" value="#9c27b0" style="flex: 1;">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="primary" style="width: 100%; justify-content: center; background: linear-gradient(135deg, #d470df, #9c27b0);" onclick="executeTransfer()">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Analysieren & Erstellen
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
         // --- STATE ---
         let categories = ["Kleidung", "Hygiene", "Elektronik", "Dokumente", "Zubehör"];
@@ -323,93 +385,107 @@
         let currentOpenLuggageId = null;
 
         window.onload = () => {
-            if(localStorage.getItem('theme') === 'light') {
-                document.body.classList.add('light-mode');
-                document.getElementById('themeBtn').innerHTML = '<i class="fa-solid fa-sun"></i>';
-            }
+            if(localStorage.getItem('theme') === 'light') { document.body.classList.add('light-mode'); document.getElementById('themeBtn').innerHTML = '<i class="fa-solid fa-sun"></i>'; }
             updateCategoryUI(); updateDashboard(); renderHall();
         };
 
         // --- HELPER ---
         function hexToRgbA(hex, alpha){
-            let c;
-            if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)){
-                c= hex.substring(1).split('');
-                if(c.length === 3) c= [c[0], c[0], c[1], c[1], c[2], c[2]];
-                c= '0x'+c.join('');
+            let c; if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)){
+                c= hex.substring(1).split(''); if(c.length === 3) c= [c[0], c[0], c[1], c[1], c[2], c[2]]; c= '0x'+c.join('');
                 return 'rgba('+[(c>>16)&255, (c>>8)&255, c&255].join(',')+','+alpha+')';
-            }
-            return `rgba(255,255,255,${alpha})`;
+            } return `rgba(255,255,255,${alpha})`;
         }
-        
         function hexToRgbArray(hex) {
-            if(!hex) return [200, 200, 200];
-            let c = hex.substring(1).split('');
-            if(c.length === 3) c = [c[0], c[0], c[1], c[1], c[2], c[2]];
-            c = '0x' + c.join('');
-            return [(c>>16)&255, (c>>8)&255, c&255];
+            if(!hex) return [200, 200, 200]; let c = hex.substring(1).split('');
+            if(c.length === 3) c = [c[0], c[0], c[1], c[1], c[2], c[2]]; c = '0x' + c.join(''); return [(c>>16)&255, (c>>8)&255, c&255];
         }
-
         function showToast(message, type = 'success') {
-            const container = document.getElementById('toastContainer');
-            const toast = document.createElement('div'); toast.className = 'toast';
+            const container = document.getElementById('toastContainer'); const toast = document.createElement('div'); toast.className = 'toast';
             let icon = '<i class="fa-solid fa-check-circle" style="color: var(--success-green);"></i>';
             if(type === 'error') icon = '<i class="fa-solid fa-triangle-exclamation" style="color: var(--danger-red);"></i>';
-            toast.innerHTML = `${icon} <span>${message}</span>`;
-            container.appendChild(toast);
+            toast.innerHTML = `${icon} <span>${message}</span>`; container.appendChild(toast);
             setTimeout(() => { toast.style.animation = 'fadeOut 0.4s forwards'; setTimeout(() => toast.remove(), 400); }, 3500);
         }
-
         function toggleTheme() {
-            const body = document.body; const btn = document.getElementById('themeBtn');
-            body.classList.toggle('light-mode');
+            const body = document.body; const btn = document.getElementById('themeBtn'); body.classList.toggle('light-mode');
             if(body.classList.contains('light-mode')) { btn.innerHTML = '<i class="fa-solid fa-sun"></i>'; localStorage.setItem('theme', 'light'); } 
             else { btn.innerHTML = '<i class="fa-solid fa-moon"></i>'; localStorage.setItem('theme', 'dark'); }
         }
 
-        // --- WEATHER & KI ASSISTANT ---
+        // --- NEWS API (RSS to JSON) ---
+        async function fetchNews() {
+            const city = document.getElementById('newsCity').value.trim();
+            if(!city) return;
+            const btn = document.getElementById('newsBtn');
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i>`;
+            const container = document.getElementById('newsListContainer');
+            
+            try {
+                // Fetch Google News RSS via public RSS2JSON API
+                const rssUrl = encodeURIComponent(`https://news.google.com/rss/search?q=${city}&hl=de&gl=DE&ceid=DE:de`);
+                const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${rssUrl}`);
+                const data = await res.json();
+
+                if(data.status === 'ok' && data.items && data.items.length > 0) {
+                    container.innerHTML = '';
+                    // Take top 3 news
+                    for(let i=0; i<3; i++) {
+                        if(data.items[i]) {
+                            const item = data.items[i];
+                            // Clean up source name usually appended to title "- Source"
+                            let title = item.title;
+                            let source = "News";
+                            if(title.includes(" - ")) {
+                                const parts = title.split(" - ");
+                                source = parts.pop(); title = parts.join(" - ");
+                            }
+                            
+                            container.innerHTML += `
+                                <a href="${item.link}" target="_blank" class="news-card">
+                                    <div class="news-title">${title}</div>
+                                    <div class="news-source"><span>${source}</span> <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:0.6rem;"></i></div>
+                                </a>
+                            `;
+                        }
+                    }
+                } else {
+                    container.innerHTML = `<p style="font-size:0.85rem; color:var(--text-muted); text-align:center;">Keine News gefunden.</p>`;
+                }
+            } catch(e) {
+                container.innerHTML = `<p style="font-size:0.85rem; color:var(--danger-red); text-align:center;">Laden fehlgeschlagen.</p>`;
+            }
+            btn.innerHTML = `<i class="fa-solid fa-globe"></i>`;
+        }
+
+        // --- WEATHER & KI ---
         async function fetchWeather() {
             const city = document.getElementById('weatherCity').value.trim();
             if(!city) return;
-            
-            const btn = document.getElementById('weatherBtn');
-            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Lade...`;
-
+            const btn = document.getElementById('weatherBtn'); btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i>`;
             try {
                 const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=1&language=de`);
                 const geoData = await geoRes.json();
-                if(!geoData.results) { showToast("Ort nicht gefunden!", "error"); btn.innerHTML = `<i class="fa-solid fa-magnifying-glass"></i> Abrufen`; return; }
-                
+                if(!geoData.results) { showToast("Ort nicht gefunden!", "error"); btn.innerHTML = `<i class="fa-solid fa-magnifying-glass"></i>`; return; }
                 const lat = geoData.results[0].latitude; const lon = geoData.results[0].longitude;
-
                 const wRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=auto`);
                 const wData = await wRes.json();
-
-                renderForecastGraph(wData.daily);
-                generateSmartSuggestions(wData.daily);
-
+                renderForecastGraph(wData.daily); generateSmartSuggestions(wData.daily);
                 document.getElementById('forecastContainer').style.display = 'block';
-            } catch (err) { showToast("Fehler beim Abrufen der Daten.", "error"); }
-            btn.innerHTML = `<i class="fa-solid fa-magnifying-glass"></i> Abrufen`;
+            } catch (err) { showToast("Fehler beim Abrufen der Wetterdaten.", "error"); }
+            btn.innerHTML = `<i class="fa-solid fa-magnifying-glass"></i>`;
         }
 
         function renderForecastGraph(daily) {
-            const chart = document.getElementById('forecastChart');
-            chart.innerHTML = '';
+            const chart = document.getElementById('forecastChart'); chart.innerHTML = '';
             const days = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
-            
-            // Find max temp to scale the bars correctly
             const globalMax = Math.max(...daily.temperature_2m_max.slice(0, 5));
             const globalMin = Math.min(...daily.temperature_2m_min.slice(0, 5));
-            const tempRange = Math.max(globalMax - Math.min(0, globalMin), 1); // Avoid div by 0
-
+            
             for(let i=0; i<5; i++) {
-                const date = new Date(daily.time[i]);
-                const dayName = i === 0 ? 'Heute' : days[date.getDay()];
-                const max = Math.round(daily.temperature_2m_max[i]);
-                const min = Math.round(daily.temperature_2m_min[i]);
-                const rain = daily.precipitation_probability_max[i];
-                const code = daily.weathercode[i];
+                const date = new Date(daily.time[i]); const dayName = i === 0 ? 'Heute' : days[date.getDay()];
+                const max = Math.round(daily.temperature_2m_max[i]); const min = Math.round(daily.temperature_2m_min[i]);
+                const rain = daily.precipitation_probability_max[i]; const code = daily.weathercode[i];
 
                 let icon = 'fa-cloud'; let color = '#aaa';
                 if(code === 0) { icon = 'fa-sun'; color = '#ffc107'; }
@@ -418,100 +494,132 @@
                 else if(code <= 77) { icon = 'fa-snowflake'; color = '#fff'; }
                 else if(code >= 95) { icon = 'fa-cloud-bolt'; color = '#ffeb3b'; }
 
-                // Calculate percentage height for the bar based on global max
-                const heightPercent = Math.max((max / globalMax) * 100, 10); // at least 10%
-
-                chart.innerHTML += `
-                    <div class="chart-col">
-                        <span class="chart-temp">${max}° <span style="color:var(--text-muted); font-size: 0.7rem;">${min}°</span></span>
-                        <div class="bar-wrapper">
-                            <div class="temp-bar" style="height: 0%;" data-target="${heightPercent}%"></div>
-                        </div>
-                        <i class="fa-solid ${icon} chart-icon" style="color: ${color}"></i>
-                        <span class="chart-label">${dayName}</span>
-                        <span style="font-size: 0.65rem; color: #4aa5ff;">${rain}% 🌧</span>
-                    </div>
-                `;
+                const heightPercent = Math.max((max / globalMax) * 100, 10);
+                chart.innerHTML += `<div class="chart-col"><span class="chart-temp">${max}° <span style="color:var(--text-muted); font-size: 0.7rem;">${min}°</span></span><div class="bar-wrapper"><div class="temp-bar" style="height: 0%;" data-target="${heightPercent}%"></div></div><i class="fa-solid ${icon} chart-icon" style="color: ${color}"></i><span class="chart-label">${dayName}</span><span style="font-size: 0.65rem; color: #4aa5ff;">${rain}% 🌧</span></div>`;
             }
-
-            // Animate bars
-            setTimeout(() => {
-                document.querySelectorAll('.temp-bar').forEach(bar => {
-                    bar.style.height = bar.getAttribute('data-target');
-                });
-            }, 100);
+            setTimeout(() => { document.querySelectorAll('.temp-bar').forEach(bar => { bar.style.height = bar.getAttribute('data-target'); }); }, 100);
         }
 
         function generateSmartSuggestions(daily) {
-            const tagsContainer = document.getElementById('suggestionTags');
-            tagsContainer.innerHTML = '';
-            
+            const tagsContainer = document.getElementById('suggestionTags'); tagsContainer.innerHTML = '';
             let suggestions = new Set();
-            const maxTemp = Math.max(...daily.temperature_2m_max.slice(0,5));
-            const minTemp = Math.min(...daily.temperature_2m_min.slice(0,5));
-            const maxRain = Math.max(...daily.precipitation_probability_max.slice(0,5));
-
+            const maxTemp = Math.max(...daily.temperature_2m_max.slice(0,5)); const minTemp = Math.min(...daily.temperature_2m_min.slice(0,5)); const maxRain = Math.max(...daily.precipitation_probability_max.slice(0,5));
             if(maxTemp > 25) { suggestions.add({n: 'Sonnencreme', c: 'Hygiene'}); suggestions.add({n: 'Badehose', c: 'Kleidung'}); suggestions.add({n: 'Sonnenbrille', c: 'Zubehör'});}
             if(minTemp < 10) { suggestions.add({n: 'Dicke Jacke', c: 'Kleidung'}); suggestions.add({n: 'Mütze', c: 'Kleidung'}); }
             if(maxRain > 40) { suggestions.add({n: 'Regenschirm', c: 'Zubehör'}); suggestions.add({n: 'Regenjacke', c: 'Kleidung'}); }
             suggestions.add({n: 'Reisepass', c: 'Dokumente'}); suggestions.add({n: 'Ladekabel', c: 'Elektronik'});
-
             suggestions.forEach(item => {
                 if(!categories.includes(item.c)) item.c = categories[0];
                 tagsContainer.innerHTML += `<div class="s-tag" onclick="quickAdd('${item.n}', '${item.c}')"><i class="fa-solid fa-plus"></i> ${item.n}</div>`;
             });
         }
-
         function quickAdd(name, cat) {
             if(luggages.length === 0) { showToast("Bitte erstelle zuerst ein Gepäckstück!", "error"); return; }
-            const target = luggages[0]; 
-            target.items.push({ id: Date.now().toString(), name: name, cat: cat, packed: false });
-            showToast(`"${name}" in "${target.name}" gepackt`);
-            renderHall(); updateDashboard();
+            const target = luggages[0]; target.items.push({ id: Date.now().toString(), name: name, cat: cat, packed: false });
+            showToast(`"${name}" in "${target.name}" gepackt`); renderHall(); updateDashboard();
         }
+
+        // --- SMART TRANSFER ASSISTANT ---
+        function openTransferModal() {
+            if(luggages.length < 2) { showToast("Du brauchst mindestens 2 Gepäckstücke für diese Funktion.", "error"); return; }
+            const selA = document.getElementById('transferA'); const selB = document.getElementById('transferB');
+            selA.innerHTML = ''; selB.innerHTML = '';
+            luggages.forEach(l => {
+                selA.innerHTML += `<option value="${l.id}">${l.name}</option>`;
+                selB.innerHTML += `<option value="${l.id}">${l.name}</option>`;
+            });
+            // Select second item for B by default if available
+            if(luggages.length > 1) selB.selectedIndex = 1;
+            
+            document.getElementById('transferModal').classList.add('active');
+        }
+
+        function executeTransfer() {
+            const idA = document.getElementById('transferA').value;
+            const idB = document.getElementById('transferB').value;
+            const type = document.getElementById('transferType').value;
+            const color = document.getElementById('transferColor').value;
+            
+            if(idA === idB) { showToast("Bitte zwei unterschiedliche Koffer wählen.", "error"); return; }
+            
+            const lugA = luggages.find(l => l.id === idA);
+            const lugB = luggages.find(l => l.id === idB);
+            
+            let overlapItems = [];
+            let newItemsA = [];
+            let newItemsB = [];
+            
+            // Collect lowercase names of B
+            const bNames = lugB.items.map(i => i.name.toLowerCase().trim());
+            
+            // Find overlaps in A
+            lugA.items.forEach(itemA => {
+                if(bNames.includes(itemA.name.toLowerCase().trim())) {
+                    overlapItems.push({...itemA, id: Date.now().toString() + Math.random().toString(16).substr(2,4), packed: false});
+                } else {
+                    newItemsA.push(itemA);
+                }
+            });
+
+            if(overlapItems.length === 0) { showToast("Keine Überschneidungen (identische Namen) gefunden.", "error"); return; }
+            
+            // Remove overlaps from B
+            const overlapNames = overlapItems.map(i => i.name.toLowerCase().trim());
+            lugB.items.forEach(itemB => {
+                if(!overlapNames.includes(itemB.name.toLowerCase().trim())) {
+                    newItemsB.push(itemB);
+                }
+            });
+
+            // Update original luggages
+            lugA.items = newItemsA;
+            lugB.items = newItemsB;
+
+            // Create transfer luggage
+            const transferLuggage = {
+                id: Date.now().toString(),
+                type: type,
+                color: color,
+                name: `Fluggepäck (${overlapItems.length} Items)`,
+                w: 40, h: 55, weight: 8, deadline: lugA.deadline || '',
+                items: overlapItems
+            };
+
+            luggages.push(transferLuggage);
+            closeModal('transferModal');
+            renderHall(); updateDashboard();
+            showToast(`Erfolgreich! ${overlapItems.length} doppelte Items ins Fluggepäck verpackt.`, "success");
+        }
+
 
         // --- VOICE COMMAND ---
         function startVoiceCommand() {
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
             if (!SpeechRecognition) { showToast("Browser unterstützt kein Voice.", "error"); return; }
             if(luggages.length === 0) { showToast("Bitte erstelle zuerst ein Gepäckstück!", "error"); return; }
-
-            const recognition = new SpeechRecognition();
-            recognition.lang = 'de-DE'; recognition.interimResults = false; recognition.maxAlternatives = 1;
-            const btn = document.getElementById('voiceBtn');
-            btn.classList.add('recording'); btn.innerHTML = '<i class="fa-solid fa-ear-listen"></i> Höre zu...';
-
+            const recognition = new SpeechRecognition(); recognition.lang = 'de-DE'; recognition.interimResults = false; recognition.maxAlternatives = 1;
+            const btn = document.getElementById('voiceBtn'); btn.classList.add('recording'); btn.innerHTML = '<i class="fa-solid fa-ear-listen"></i> Höre zu...';
             recognition.start();
-            recognition.onresult = (event) => processSmartVoiceCommand(event.results[0][0].transcript);
+            recognition.onresult = (event) => {
+                let text = event.results[0][0].transcript.toLowerCase().trim().replace(/bitte/g, '').replace(/einmal/g, '').replace(/hinzu$/i, '').trim();
+                text = text.replace(/^(füge|packe|tu|lege|schreibe)\s+(eine|einen|ein|den|die|das)?\s*/i, '');
+                let itemName = text; let luggageQuery = "";
+                const splitMatch = text.match(/(.+?)\s+(in den|in die|in das|in|zu dem|zu der|zum|zur|zu|auf den|auf)\s+(.+)/i);
+                if(splitMatch) { itemName = splitMatch[1].trim(); luggageQuery = splitMatch[3].trim(); }
+                if(!itemName) { showToast("Nichts verstanden.", "error"); return; }
+                itemName = itemName.charAt(0).toUpperCase() + itemName.slice(1);
+                let targetLuggage = null;
+                if(luggageQuery) { const searchWords = luggageQuery.split(' '); targetLuggage = luggages.find(l => searchWords.some(w => w.length > 2 && l.name.toLowerCase().includes(w))); }
+                if(!targetLuggage && luggages.length > 0) targetLuggage = luggages[0];
+                if(targetLuggage) {
+                    targetLuggage.items.push({ id: Date.now().toString(), name: itemName, cat: categories[0], packed: false });
+                    showToast(`"${itemName}" in ${targetLuggage.name} gepackt`);
+                    renderHall(); updateDashboard(); if(currentOpenLuggageId === targetLuggage.id) renderModalContent();
+                } else { showToast("Gepäck nicht gefunden.", "error"); }
+            };
             recognition.onspeechend = () => recognition.stop();
             recognition.onend = () => { btn.classList.remove('recording'); btn.innerHTML = '<i class="fa-solid fa-microphone"></i> Sprachbefehl'; };
             recognition.onerror = (e) => showToast("Mikrofonfehler", "error");
-        }
-
-        function processSmartVoiceCommand(transcript) {
-            let text = transcript.toLowerCase().trim().replace(/bitte/g, '').replace(/einmal/g, '').replace(/hinzu$/i, '').trim();
-            text = text.replace(/^(füge|packe|tu|lege|schreibe)\s+(eine|einen|ein|den|die|das)?\s*/i, '');
-
-            let itemName = text; let luggageQuery = "";
-            const splitMatch = text.match(/(.+?)\s+(in den|in die|in das|in|zu dem|zu der|zum|zur|zu|auf den|auf)\s+(.+)/i);
-            if(splitMatch) { itemName = splitMatch[1].trim(); luggageQuery = splitMatch[3].trim(); }
-            if(!itemName) { showToast("Nichts verstanden.", "error"); return; }
-
-            itemName = itemName.charAt(0).toUpperCase() + itemName.slice(1);
-            let targetLuggage = null;
-
-            if(luggageQuery) {
-                const searchWords = luggageQuery.split(' ');
-                targetLuggage = luggages.find(l => searchWords.some(w => w.length > 2 && l.name.toLowerCase().includes(w)));
-            }
-            if(!targetLuggage && luggages.length > 0) targetLuggage = luggages[0];
-
-            if(targetLuggage) {
-                targetLuggage.items.push({ id: Date.now().toString(), name: itemName, cat: categories[0], packed: false });
-                showToast(`"${itemName}" in ${targetLuggage.name} gepackt`);
-                renderHall(); updateDashboard();
-                if(currentOpenLuggageId === targetLuggage.id) renderModalContent();
-            } else { showToast("Gepäck nicht gefunden.", "error"); }
         }
 
         // --- DASHBOARD ---
@@ -549,7 +657,7 @@
             const w = parseInt(document.getElementById('luggageW').value) || 40;
             const h = parseInt(document.getElementById('luggageH').value) || 55;
             const weight = parseFloat(document.getElementById('luggageWeight').value) || 10;
-            const deadline = document.getElementById('luggageDeadline').value; // NEU: Frist
+            const deadline = document.getElementById('luggageDeadline').value;
 
             luggages.push({ id: Date.now().toString(), type, name, color, w, h, weight, deadline, items: [] });
             document.getElementById('luggageName').value = ''; document.getElementById('luggageDeadline').value = ''; 
@@ -576,9 +684,7 @@
                 let details = ''; if(l.type === 'koffer') details = '<div class="koffer-strap"></div><div class="koffer-strap-2"></div>';
 
                 const baseColor = l.color || '#ffffff';
-                const glassBg = hexToRgbA(baseColor, 0.08); 
-                const glassBorder = hexToRgbA(baseColor, 0.3);
-                
+                const glassBg = hexToRgbA(baseColor, 0.08); const glassBorder = hexToRgbA(baseColor, 0.3);
                 let deadlineHtml = l.deadline ? `<span style="display:block; font-size:0.7rem; color:var(--text-muted); margin-top:4px;"><i class="fa-regular fa-clock"></i> ${new Date(l.deadline).toLocaleDateString('de-DE')}</span>` : '';
 
                 area.innerHTML += `
@@ -607,7 +713,6 @@
 
             let icon = lug.type === 'rucksack' ? 'fa-backpack' : (lug.type === 'koffer' ? 'fa-suitcase' : 'fa-suitcase-rolling');
             document.getElementById('modalTitle').innerHTML = `<i class="fa-solid ${icon}"></i> ${lug.name}`;
-            
             document.getElementById('modalDim').innerHTML = `<i class="fa-solid fa-ruler-combined"></i> ${lug.w}x${lug.h} cm`;
             document.getElementById('modalWeight').innerHTML = `<i class="fa-solid fa-weight-scale"></i> max ${lug.weight} kg`;
             document.getElementById('modalDeadline').innerHTML = lug.deadline ? `<i class="fa-regular fa-clock"></i> Frist: ${new Date(lug.deadline).toLocaleDateString('de-DE')}` : '';
@@ -630,12 +735,10 @@
                 html += `</div>`; listContainer.innerHTML += html;
             });
         }
-
         function addItemToCurrentLuggage() {
             const input = document.getElementById('modalNewItem'); const cat = document.getElementById('modalCatSelect').value; const name = input.value.trim();
             if(!name || !currentOpenLuggageId) return;
-            const lug = luggages.find(l => l.id === currentOpenLuggageId);
-            lug.items.push({ id: Date.now().toString(), name: name, cat: cat, packed: false });
+            const lug = luggages.find(l => l.id === currentOpenLuggageId); lug.items.push({ id: Date.now().toString(), name: name, cat: cat, packed: false });
             input.value = ''; input.focus(); renderModalContent(); renderHall(); updateDashboard();
         }
         function toggleItem(id) { const lug = luggages.find(l => l.id === currentOpenLuggageId); const item = lug.items.find(i => i.id === id); if(item) item.packed = !item.packed; renderModalContent(); renderHall(); updateDashboard(); }
@@ -644,8 +747,7 @@
         // --- IMPORT / EXPORT ---
         function exportData() { downloadJSON({ categories, luggages }, 'reisedaten_koffer.json'); showToast("Erfolgreich exportiert!", "success");}
         function importData(event) {
-            const file = event.target.files[0]; if (!file) return;
-            const reader = new FileReader();
+            const file = event.target.files[0]; if (!file) return; const reader = new FileReader();
             reader.onload = e => { 
                 try { 
                     const data = JSON.parse(e.target.result);
@@ -659,87 +761,49 @@
         }
         function downloadJSON(data, filename) { const a = document.createElement('a'); a.href = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(data, null, 2)); a.download = filename; a.click(); }
 
-        // --- EDITORIAL PDF GENERATOR (Neu: Gepäck links, Liste rechts) ---
+        // --- EDITORIAL PDF GENERATOR ---
         function generatePDF() {
             const { jsPDF } = window.jspdf; const doc = new jsPDF();
             doc.setFontSize(24); doc.setFont("helvetica", "bold"); doc.setTextColor(20, 25, 30); doc.text("Pack-Zeugnis", 15, 20);
-            
             let currentY = 35;
-
             if(luggages.length === 0) { doc.setFontSize(12); doc.setFont("helvetica", "normal"); doc.text("Keine Gepäckstücke vorhanden.", 15, currentY); doc.save("Packliste.pdf"); return; }
 
-            luggages.forEach((lug, index) => {
-                // Page Break Check: Wenn nicht genug Platz für eine Box (ca. 80px), dann neue Seite
+            luggages.forEach((lug) => {
                 if(currentY > 220) { doc.addPage(); currentY = 20; }
-
-                // --- 1. LINKE SPALTE: VISUELLES GEPÄCK ---
-                const startX = 15;
-                const rgbColor = hexToRgbArray(lug.color || '#cccccc');
+                const startX = 15; const rgbColor = hexToRgbArray(lug.color || '#cccccc');
+                const visW = Math.max(lug.w * 0.8, 25); const visH = Math.max(lug.h * 0.8, 35);
                 
-                // Zeichne Koffer Vektorgrafik (Maßstabsgetreu verkleinert)
-                const visW = Math.max(lug.w * 0.8, 25);
-                const visH = Math.max(lug.h * 0.8, 35);
-                
-                doc.setDrawColor(50, 50, 50);
-                doc.setLineWidth(0.5);
-                
-                // Leichte Aufhellung der Farbe für das "Glas" im PDF
-                doc.setFillColor(rgbColor[0], rgbColor[1], rgbColor[2]);
+                doc.setDrawColor(50, 50, 50); doc.setLineWidth(0.5); doc.setFillColor(rgbColor[0], rgbColor[1], rgbColor[2]);
 
                 if(lug.type === 'trolley') {
-                    doc.roundedRect(startX+5, currentY+5, visW, visH, 3, 3, 'FD'); // Body
-                    doc.rect(startX+(visW/2), currentY, 12, 5, 'S'); // Handle
-                    doc.setFillColor(0,0,0);
-                    doc.rect(startX+10, currentY+5+visH, 6, 3, 'F'); // Rad L
-                    doc.rect(startX+visW-6, currentY+5+visH, 6, 3, 'F'); // Rad R
+                    doc.roundedRect(startX+5, currentY+5, visW, visH, 3, 3, 'FD'); doc.rect(startX+(visW/2), currentY, 12, 5, 'S');
+                    doc.setFillColor(0,0,0); doc.rect(startX+10, currentY+5+visH, 6, 3, 'F'); doc.rect(startX+visW-6, currentY+5+visH, 6, 3, 'F');
                 } else if(lug.type === 'koffer') {
-                    doc.roundedRect(startX, currentY+5, visW, visH, 2, 2, 'FD'); // Body
-                    doc.rect(startX+visW, currentY+15, 3, 15, 'S'); // Side Handle
-                    doc.setFillColor(0,0,0); doc.globalAlpha = 0.5;
-                    doc.rect(startX+(visW*0.3), currentY+5, 4, visH, 'F'); // Gurt
-                    doc.globalAlpha = 1.0;
-                } else { // Rucksack
-                    doc.roundedRect(startX, currentY+5, visW, visH, 8, 8, 'FD'); // Body
-                    doc.rect(startX+(visW/2)-5, currentY+1, 10, 4, 'S'); // Top Handle
-                    doc.setFillColor(255,255,255); doc.globalAlpha = 0.2;
-                    doc.roundedRect(startX+(visW*0.15), currentY+15, visW*0.7, visH*0.5, 3, 3, 'F'); // Tasche
-                    doc.globalAlpha = 1.0;
+                    doc.roundedRect(startX, currentY+5, visW, visH, 2, 2, 'FD'); doc.rect(startX+visW, currentY+15, 3, 15, 'S');
+                    doc.setFillColor(0,0,0); doc.globalAlpha = 0.5; doc.rect(startX+(visW*0.3), currentY+5, 4, visH, 'F'); doc.globalAlpha = 1.0;
+                } else {
+                    doc.roundedRect(startX, currentY+5, visW, visH, 8, 8, 'FD'); doc.rect(startX+(visW/2)-5, currentY+1, 10, 4, 'S');
+                    doc.setFillColor(255,255,255); doc.globalAlpha = 0.2; doc.roundedRect(startX+(visW*0.15), currentY+15, visW*0.7, visH*0.5, 3, 3, 'F'); doc.globalAlpha = 1.0;
                 }
 
-                // Text unterm Gepäckstück
-                doc.setFont("helvetica", "bold"); doc.setFontSize(11); doc.setTextColor(20, 25, 30);
-                doc.text(lug.name, startX, currentY + visH + 15, {maxWidth: 50});
-                
+                doc.setFont("helvetica", "bold"); doc.setFontSize(11); doc.setTextColor(20, 25, 30); doc.text(lug.name, startX, currentY + visH + 15, {maxWidth: 50});
                 doc.setFont("helvetica", "normal"); doc.setFontSize(9); doc.setTextColor(100, 100, 100);
-                doc.text(`Typ: ${lug.type.toUpperCase()}`, startX, currentY + visH + 20);
-                doc.text(`Maße: ${lug.w}x${lug.h} cm`, startX, currentY + visH + 25);
-                doc.text(`Max: ${lug.weight} kg`, startX, currentY + visH + 30);
+                doc.text(`Typ: ${lug.type.toUpperCase()}`, startX, currentY + visH + 20); doc.text(`Maße: ${lug.w}x${lug.h} cm`, startX, currentY + visH + 25); doc.text(`Max: ${lug.weight} kg`, startX, currentY + visH + 30);
                 if(lug.deadline) { doc.text(`Frist: ${new Date(lug.deadline).toLocaleDateString('de-DE')}`, startX, currentY + visH + 35); }
 
-                // --- 2. RECHTE SPALTE: CHECKLISTE ---
                 const tableData = [...lug.items].sort((a,b) => a.cat.localeCompare(b.cat)).map(i => [i.packed ? "[ X ]" : "[   ]", i.cat, i.name]);
                 if(tableData.length === 0) tableData.push(["-", "-", "Koffer ist leer."]);
 
                 doc.autoTable({
-                    startY: currentY,
-                    margin: { left: startX + 60 }, // Drückt die Tabelle nach rechts neben den Koffer
-                    head: [['St.', 'Kategorie', 'Gegenstand']],
-                    body: tableData,
-                    theme: 'grid',
+                    startY: currentY, margin: { left: startX + 60 }, head: [['St.', 'Kategorie', 'Gegenstand']], body: tableData, theme: 'grid',
                     headStyles: { fillColor: [rgbColor[0], rgbColor[1], rgbColor[2]], textColor: (rgbColor[0]*0.299 + rgbColor[1]*0.587 + rgbColor[2]*0.114) > 186 ? [0,0,0] : [255,255,255] },
-                    styles: { font: 'helvetica', fontSize: 10 },
-                    columnStyles: { 0: { cellWidth: 15, halign: 'center' }, 1: { cellWidth: 35 } }
+                    styles: { font: 'helvetica', fontSize: 10 }, columnStyles: { 0: { cellWidth: 15, halign: 'center' }, 1: { cellWidth: 35 } }
                 });
 
-                // Den tiefsten Punkt berechnen (entweder die Tabelle war sehr lang, oder die Koffer-Grafik)
-                const bottomOfLuggage = currentY + visH + 45;
-                const bottomOfTable = doc.lastAutoTable.finalY + 15;
-                
+                const bottomOfLuggage = currentY + visH + 45; const bottomOfTable = doc.lastAutoTable.finalY + 15;
                 currentY = Math.max(bottomOfLuggage, bottomOfTable);
             });
-
-            doc.save("Gepaeck_Editorial.pdf");
-            showToast("Editorial PDF generiert!", "success");
+            doc.save("Gepaeck_Editorial.pdf"); showToast("Editorial PDF generiert!", "success");
         }
     </script>
 </body>
