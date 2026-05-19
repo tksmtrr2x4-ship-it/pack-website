@@ -597,7 +597,6 @@
         }
 
 
-        // --- VOICE COMMAND ---
         // --- VOICE COMMAND (Continuous & Auto-Category) ---
         let voiceRecognition = null;
         let isRecording = false;
@@ -658,19 +657,96 @@
             };
         }
 
+        // --- SMART VOICE FORMATTING & CATEGORIZATION ---
+        
+        function formatSpokenItem(text) {
+            // 1. Zahlwörter in Ziffern umwandeln
+            const numMap = { "ein": "1", "eine": "1", "einen": "1", "einem": "1", "eins": "1", "zwei": "2", "zwo": "2", "drei": "3", "vier": "4", "fünf": "5", "sechs": "6", "sieben": "7", "acht": "8", "neun": "9", "zehn": "10", "elf": "11", "zwölf": "12" };
+            
+            let words = text.split(" ").map(w => {
+                let lower = w.toLowerCase();
+                if (numMap[lower]) return numMap[lower];
+                return w;
+            });
+
+            // 2. Akronyme / Buchstabiertes groß schreiben (z.B. rl -> RL)
+            const stopWords = ["in", "an", "am", "im", "um", "zu", "ab", "da", "so", "wo", "ja", "ob", "du", "er", "es", "sie"];
+            words = words.map(w => {
+                let cleanWord = w.replace(/[^a-zA-ZäöüÄÖÜß]/g, '');
+                // Wenn das Wort nur 1-2 Buchstaben hat und kein Füllwort ist -> GROSSSCHREIBEN
+                if (cleanWord.length > 0 && cleanWord.length <= 2 && !stopWords.includes(cleanWord.toLowerCase())) {
+                    return w.toUpperCase();
+                }
+                return w;
+            });
+
+            let formatted = words.join(" ");
+            // Erster Buchstabe groß
+            return formatted.charAt(0).toUpperCase() + formatted.slice(1);
+        }
+
+        function findBestCategory(itemName, availableCategories) {
+            const lowerItem = itemName.toLowerCase();
+            
+            // Wörterbuch: Was gehört zu welcher Basis-Gruppe?
+            const keywordMap = {
+                "Kleidung": ["hose", "shirt", "hemd", "jacke", "socken", "schuhe", "kleid", "pullover", "pulli", "unterwäsche", "bh", "slip", "badehose", "bikini", "mütze", "schal", "gürtel"],
+                "Hygiene": ["zahnbürste", "zahncreme", "shampoo", "duschgel", "deo", "parfüm", "creme", "pflege", "rasierer", "seife", "handtuch", "bürste", "kamm"],
+                "Elektronik": ["kabel", "ladekabel", "laptop", "handy", "smartphone", "pad", "tablet", "powerbank", "stecker", "kopfhörer", "kamera", "akku", "batterie", "pc", "usb"],
+                "Dokumente": ["pass", "reisepass", "ticket", "ausweis", "karte", "geld", "portemonnaie", "visum"],
+                "Snacks": ["schokolade", "snack", "wasser", "brot", "apfel", "keks", "riegel", "bonbon", "getränk", "essen", "nahrung"],
+                "Apotheke": ["tablette", "pille", "pflaster", "verband", "medizin", "aspirin", "tropfen", "spray"]
+            };
+
+            let idealGroup = null;
+            for (const [group, keywords] of Object.entries(keywordMap)) {
+                if (keywords.some(kw => lowerItem.includes(kw))) { idealGroup = group; break; }
+            }
+
+            if (idealGroup) {
+                // Synonyme für die Nutzer-Kategorien (Findet "Snacks", auch wenn der Nutzer "Essen" oder "Verpflegung" erstellt hat)
+                const groupSynonyms = {
+                    "Kleidung": ["kleidung", "klamotten", "anziehsachen", "gewand"],
+                    "Hygiene": ["hygiene", "bad", "waschzeug", "kosmetik", "pflege", "kulturbeutel"],
+                    "Elektronik": ["elektronik", "technik", "geräte", "strom", "zubehör"],
+                    "Dokumente": ["dokumente", "papiere", "wichtiges", "finanzen"],
+                    "Snacks": ["essen", "snacks", "verpflegung", "nahrung", "proviant", "lebensmittel"],
+                    "Apotheke": ["medikamente", "apotheke", "gesundheit", "erste hilfe"]
+                };
+
+                const targetSynonyms = groupSynonyms[idealGroup];
+                for (let cat of availableCategories) {
+                    if (targetSynonyms.some(syn => cat.toLowerCase().includes(syn))) {
+                        return cat; // Perfekte Nutzer-Kategorie gefunden!
+                    }
+                }
+            }
+            
+            // Fallback: Wenn nichts passt, nimm die erste verfügbare Kategorie
+            return availableCategories[0];
+        }
+
         function processSmartVoiceCommand(transcript) {
-            let text = transcript.toLowerCase().trim().replace(/bitte/g, '').replace(/einmal/g, '').replace(/hinzu$/i, '').trim();
+            let text = transcript.toLowerCase().trim();
+            // Störwörter entfernen
+            text = text.replace(/bitte/g, '').replace(/einmal/g, '').replace(/hinzu$/i, '').trim();
             text = text.replace(/^(füge|packe|tu|lege|schreibe)\s+(eine|einen|ein|den|die|das)?\s*/i, '');
             
-            let itemName = text; let luggageQuery = "";
+            let rawItemName = text; let luggageQuery = "";
             const splitMatch = text.match(/(.+?)\s+(in den|in die|in das|in|zu dem|zu der|zum|zur|zu|auf den|auf)\s+(.+)/i);
-            if(splitMatch) { itemName = splitMatch[1].trim(); luggageQuery = splitMatch[3].trim(); }
             
-            if(!itemName) return; // Stumm abbrechen, damit der Dauer-Modus nicht mit Fehlern nervt
+            if(splitMatch) { 
+                rawItemName = splitMatch[1].trim(); 
+                luggageQuery = splitMatch[3].trim(); 
+            }
+            
+            if(!rawItemName) return; // Bei Dauerdiktat stille Fehler ignorieren
 
-            itemName = itemName.charAt(0).toUpperCase() + itemName.slice(1);
+            // KI-Formatierung anwenden (Zahlen, Akronyme)
+            let itemName = formatSpokenItem(rawItemName);
+
+            // Koffer-Zuordnung
             let targetLuggage = null;
-
             if(luggageQuery) { 
                 const searchWords = luggageQuery.split(' '); 
                 targetLuggage = luggages.find(l => searchWords.some(w => w.length > 2 && l.name.toLowerCase().includes(w))); 
@@ -678,13 +754,8 @@
             if(!targetLuggage && luggages.length > 0) targetLuggage = luggages[0];
 
             if(targetLuggage) {
-                // Automatische Kategorisierung anhand von Stichwörtern
-                let autoCat = categories[0];
-                const lowerItem = itemName.toLowerCase();
-                if(/creme|bürste|dusch|deo|shampoo|parfüm|pflege/.test(lowerItem) && categories.includes("Hygiene")) autoCat = "Hygiene";
-                else if(/kabel|laptop|handy|pad|powerbank|stecker|kopfhörer/.test(lowerItem) && categories.includes("Elektronik")) autoCat = "Elektronik";
-                else if(/pass|ticket|ausweis|karte|geld/.test(lowerItem) && categories.includes("Dokumente")) autoCat = "Dokumente";
-                else if(/hose|shirt|hemd|jacke|socken|schuhe|kleid/.test(lowerItem) && categories.includes("Kleidung")) autoCat = "Kleidung";
+                // KI-Kategorisierung anwenden
+                let autoCat = findBestCategory(itemName, categories);
 
                 targetLuggage.items.push({ id: Date.now().toString(), name: itemName, cat: autoCat, packed: false });
                 showToast(`"${itemName}" in ${targetLuggage.name} gepackt`);
