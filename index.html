@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>High-End Travel Packer - Smart Transfer Edition</title>
+    <title>High-End Travel Packer - Ultimate Edition</title>
     
     <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -103,7 +103,6 @@
         input[type="text"], input[type="number"], input[type="date"], select { width: 100%; background: var(--input-bg); border: 1px solid var(--glass-border); color: var(--text-main); padding: 12px 15px; border-radius: 12px; font-size: 0.95rem; transition: 0.2s; color-scheme: dark;}
         body.light-mode input[type="date"] { color-scheme: light; }
         input:focus, select:focus { outline: none; border-color: var(--accent-gold); background: rgba(255,255,255,0.05); }
-
         input[type="color"] { -webkit-appearance: none; border: none; width: 100%; height: 44px; border-radius: 12px; cursor: pointer; padding: 0; background: none; }
         input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
         input[type="color"]::-webkit-color-swatch { border: 1px solid var(--glass-border); border-radius: 12px; }
@@ -127,12 +126,10 @@
         .chart-label { font-size: 0.75rem; color: var(--text-muted); margin-top: 5px; font-weight: 600;}
         .chart-temp { position: absolute; top: -20px; font-size: 0.8rem; font-weight: 600; width: 100%; text-align: center;}
 
-        /* Smart Suggestions */
         .smart-suggestions { margin-top: 15px; padding-top: 15px; }
         .s-tag { background: rgba(46, 160, 67, 0.15); border: 1px solid rgba(46, 160, 67, 0.3); color: var(--success-green); padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: 0.2s; margin: 5px 5px 0 0;}
         .s-tag:hover { background: rgba(46, 160, 67, 0.3); }
 
-        /* News Cards */
         .news-list { display: flex; flex-direction: column; gap: 10px; margin-top: 10px;}
         .news-card { background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); padding: 12px 15px; border-radius: 12px; display: flex; flex-direction: column; gap: 5px; text-decoration: none; color: var(--text-main); transition: 0.2s;}
         .news-card:hover { background: rgba(0,0,0,0.4); transform: translateX(4px); border-color: rgba(255,255,255,0.2);}
@@ -142,7 +139,6 @@
         /* --- THE HALL (Luggage) --- */
         .section-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 25px; display: flex; align-items: center; gap: 10px; }
         .luggage-area { display: flex; flex-wrap: wrap; gap: 40px; }
-        
         .luggage-wrapper { display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; }
         .luggage-wrapper:hover { transform: translateY(-10px) scale(1.03); filter: drop-shadow(0 20px 30px rgba(0,0,0,0.3)); }
 
@@ -154,6 +150,7 @@
         .mini-progress { position: absolute; bottom: 15px; left: 15%; width: 70%; height: 6px; background: rgba(0,0,0,0.3); border-radius: 3px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); z-index: 5;}
         .mini-progress-fill { background: var(--accent-gold); height: 100%; transition: 0.4s;}
 
+        /* CSS Kunst für die Gepäckstücke */
         .luggage-type-trolley .luggage-body { border-radius: 18px; }
         .luggage-type-trolley .luggage-body::before { content: ''; position: absolute; top: -20px; left: 50%; transform: translateX(-50%); width: 35%; height: 20px; border: 4px solid rgba(255,255,255,0.15); border-bottom: none; border-radius: 8px 8px 0 0; }
         .luggage-type-trolley .luggage-body::after { content: ''; position: absolute; bottom: -12px; left: 15%; width: 70%; height: 12px; border-left: 14px solid rgba(255,255,255,0.1); border-right: 14px solid rgba(255,255,255,0.1); }
@@ -167,17 +164,19 @@
         .luggage-type-rucksack .luggage-body::before { content: ''; position: absolute; top: -14px; left: 50%; transform: translateX(-50%); width: 25%; height: 14px; border: 4px solid rgba(255,255,255,0.15); border-bottom: none; border-radius: 10px 10px 0 0; }
         .luggage-type-rucksack .luggage-body::after { content: ''; position: absolute; top: 20%; left: 15%; width: 70%; height: 50%; border: 1px solid rgba(255,255,255,0.1); border-radius: 20px 20px 15px 15px; box-shadow: inset 0 4px 10px rgba(255,255,255,0.03); }
 
-        /* --- THE MODAL --- */
+        /* NEU: Waschbeutel CSS */
+        .luggage-type-waschbeutel .luggage-body { border-radius: 20px 20px 12px 12px; }
+        .luggage-type-waschbeutel .luggage-body::before { /* Reißverschluss oben quer */ content: ''; position: absolute; top: 20%; left: 0; width: 100%; height: 3px; border-top: 2px dashed rgba(255,255,255,0.3); z-index: 1; }
+        .luggage-type-waschbeutel .luggage-body::after { /* Kleine Trageschlaufe links */ content: ''; position: absolute; top: 30%; left: -12px; width: 12px; height: 30%; border: 4px solid rgba(255,255,255,0.15); border-right: none; border-radius: 10px 0 0 10px; }
+
+        /* --- MODALS --- */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(10px); display: flex; justify-content: center; align-items: center; z-index: 1000; opacity: 0; pointer-events: none; transition: 0.3s; }
         .modal-overlay.active { opacity: 1; pointer-events: auto; }
-
         .modal-content { background: var(--modal-bg); border: 1px solid rgba(255,255,255,0.1); width: 95%; max-width: 800px; max-height: 90vh; border-radius: 24px; display: flex; flex-direction: column; box-shadow: 0 30px 60px rgba(0,0,0,0.5); transform: scale(0.95); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); overflow: hidden; backdrop-filter: var(--glass-blur); }
         .modal-overlay.active .modal-content { transform: scale(1); }
-
         .modal-header { padding: 25px; border-bottom: 1px solid var(--glass-border); display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.2);}
         .close-modal { background: none; border: none; font-size: 1.8rem; color: var(--text-muted); cursor: pointer; transition: 0.2s;}
         .close-modal:hover { color: var(--text-main); transform: rotate(90deg);}
-
         .modal-body { padding: 25px; overflow-y: auto; flex-grow: 1; }
         
         .list-item { display: flex; align-items: center; justify-content: space-between; padding: 15px; background: rgba(0,0,0,0.2); margin-bottom: 10px; border-radius: 12px; border-left: 4px solid var(--accent-gold); transition: 0.2s; border: 1px solid var(--glass-border); }
@@ -241,7 +240,7 @@
                     </div>
                 </div>
 
-                <!-- NEW: SMART TRANSFER ASSISTANT -->
+                <!-- SMART TRANSFER -->
                 <div class="glass-panel" style="margin-bottom: 25px; border-color: rgba(160, 46, 150, 0.4);">
                     <div class="section-title" style="font-size: 1.1rem; margin-bottom: 10px; color: #d470df;"><i class="fa-solid fa-shuffle"></i> Smart Transfer</div>
                     <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 15px; line-height: 1.4;">Findet identische Gegenstände in zwei Koffern und schnürt automatisch ein Fluggepäck.</p>
@@ -253,7 +252,14 @@
                 <div class="glass-panel" style="margin-bottom: 25px;">
                     <div class="section-title" style="font-size: 1.1rem; margin-bottom: 15px;"><i class="fa-solid fa-box-open"></i> Neues Gepäck</div>
                     <div class="row-group">
-                        <div class="form-group" style="flex: 2;"><label>Typ</label><select id="luggageType"><option value="koffer">Koffer</option><option value="trolley">Trolley</option><option value="rucksack">Rucksack</option></select></div>
+                        <div class="form-group" style="flex: 2;"><label>Typ</label>
+                            <select id="luggageType">
+                                <option value="koffer">Koffer</option>
+                                <option value="trolley">Trolley</option>
+                                <option value="rucksack">Rucksack</option>
+                                <option value="waschbeutel">Waschbeutel</option>
+                            </select>
+                        </div>
                         <div class="form-group" style="flex: 1;"><label>Farbe</label><input type="color" id="luggageColor" value="#ffc107"></div>
                     </div>
                     <div class="form-group"><label>Name</label><input type="text" id="luggageName" placeholder="Z.B. Barcelona Trip"></div>
@@ -280,10 +286,8 @@
 
             <!-- RIGHT COLUMN -->
             <div class="right-column">
-                
                 <!-- Weather & News Dashboard -->
                 <div class="glass-panel weather-dashboard">
-                    <!-- Weather Col -->
                     <div class="dash-col" style="border-right: 1px solid var(--glass-border); padding-right: 20px;">
                         <div class="section-title" style="font-size:1.1rem;"><i class="fa-solid fa-satellite-dish" style="color: var(--accent-gold);"></i> Live Wetter & KI</div>
                         <div class="search-row">
@@ -298,7 +302,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- News Col -->
                     <div class="dash-col" style="padding-left: 10px;">
                         <div class="section-title" style="font-size:1.1rem;"><i class="fa-regular fa-newspaper" style="color: #4aa5ff;"></i> Lokale News</div>
                         <div class="search-row">
@@ -352,20 +355,19 @@
             </div>
             <div class="modal-body">
                 <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px;">Wähle zwei Gepäckstücke. Identische Items werden automatisch in ein neues Fluggepäck verschoben.</p>
-                <div class="form-group">
-                    <label>Ort A (Gepäck 1)</label>
-                    <select id="transferA"></select>
-                </div>
+                <div class="form-group"><label>Ort A (Gepäck 1)</label><select id="transferA"></select></div>
                 <div class="form-group" style="text-align: center; color: var(--text-muted);"><i class="fa-solid fa-link"></i></div>
-                <div class="form-group">
-                    <label>Ort B (Gepäck 2)</label>
-                    <select id="transferB"></select>
-                </div>
+                <div class="form-group"><label>Ort B (Gepäck 2)</label><select id="transferB"></select></div>
                 <hr style="border:0; border-top: 1px solid var(--glass-border); margin: 25px 0;">
                 <div class="form-group">
                     <label>Neues Fluggepäck erstellen</label>
                     <div style="display: flex; gap: 10px;">
-                        <select id="transferType" style="flex: 2;"><option value="trolley">Trolley</option><option value="rucksack">Rucksack</option><option value="koffer">Koffer</option></select>
+                        <select id="transferType" style="flex: 2;">
+                            <option value="trolley">Trolley</option>
+                            <option value="rucksack">Rucksack</option>
+                            <option value="koffer">Koffer</option>
+                            <option value="waschbeutel">Waschbeutel</option>
+                        </select>
                         <input type="color" id="transferColor" value="#9c27b0" style="flex: 1;">
                     </div>
                 </div>
@@ -404,6 +406,7 @@
             const container = document.getElementById('toastContainer'); const toast = document.createElement('div'); toast.className = 'toast';
             let icon = '<i class="fa-solid fa-check-circle" style="color: var(--success-green);"></i>';
             if(type === 'error') icon = '<i class="fa-solid fa-triangle-exclamation" style="color: var(--danger-red);"></i>';
+            if(type === 'info') icon = '<i class="fa-solid fa-microphone" style="color: #4aa5ff;"></i>';
             toast.innerHTML = `${icon} <span>${message}</span>`; container.appendChild(toast);
             setTimeout(() => { toast.style.animation = 'fadeOut 0.4s forwards'; setTimeout(() => toast.remove(), 400); }, 3500);
         }
@@ -413,93 +416,56 @@
             else { btn.innerHTML = '<i class="fa-solid fa-moon"></i>'; localStorage.setItem('theme', 'dark'); }
         }
 
-       // --- NEWS API (RSS to JSON) ---
+        // --- NEWS API ---
         async function fetchNews() {
-            const city = document.getElementById('newsCity').value.trim();
-            if(!city) return;
-            const btn = document.getElementById('newsBtn');
-            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i>`;
+            const city = document.getElementById('newsCity').value.trim(); if(!city) return;
+            const btn = document.getElementById('newsBtn'); btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i>`;
             const container = document.getElementById('newsListContainer');
-            
             try {
-                // News-Query optimiert: Schließt Sport/Fußball aus und fokussiert auf relevante Infos
                 const query = encodeURIComponent(`${city} -sport -fussball -fußball`);
                 const rssUrl = encodeURIComponent(`https://news.google.com/rss/search?q=${query}&hl=de&gl=DE&ceid=DE:de`);
                 const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${rssUrl}`);
                 const data = await res.json();
-
                 if(data.status === 'ok' && data.items && data.items.length > 0) {
                     container.innerHTML = '';
                     for(let i=0; i<3; i++) {
                         if(data.items[i]) {
-                            const item = data.items[i];
-                            let title = item.title;
-                            let source = "News";
-                            if(title.includes(" - ")) {
-                                const parts = title.split(" - ");
-                                source = parts.pop(); title = parts.join(" - ");
-                            }
-                            container.innerHTML += `
-                                <a href="${item.link}" target="_blank" class="news-card">
-                                    <div class="news-title">${title}</div>
-                                    <div class="news-source"><span>${source}</span> <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:0.6rem;"></i></div>
-                                </a>
-                            `;
+                            const item = data.items[i]; let title = item.title; let source = "News";
+                            if(title.includes(" - ")) { const parts = title.split(" - "); source = parts.pop(); title = parts.join(" - "); }
+                            container.innerHTML += `<a href="${item.link}" target="_blank" class="news-card"><div class="news-title">${title}</div><div class="news-source"><span>${source}</span> <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:0.6rem;"></i></div></a>`;
                         }
                     }
-                } else {
-                    container.innerHTML = `<p style="font-size:0.85rem; color:var(--text-muted); text-align:center;">Keine relevanten News gefunden.</p>`;
-                }
-            } catch(e) {
-                container.innerHTML = `<p style="font-size:0.85rem; color:var(--danger-red); text-align:center;">Laden fehlgeschlagen.</p>`;
-            }
+                } else { container.innerHTML = `<p style="font-size:0.85rem; color:var(--text-muted); text-align:center;">Keine relevanten News gefunden.</p>`; }
+            } catch(e) { container.innerHTML = `<p style="font-size:0.85rem; color:var(--danger-red); text-align:center;">Laden fehlgeschlagen.</p>`; }
             btn.innerHTML = `<i class="fa-solid fa-globe"></i>`;
         }
 
         // --- WEATHER & KI ---
-        // --- WEATHER & KI ---
         async function fetchWeather() {
-            const city = document.getElementById('weatherCity').value.trim();
-            if(!city) return;
+            const city = document.getElementById('weatherCity').value.trim(); if(!city) return;
             const btn = document.getElementById('weatherBtn'); btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i>`;
             try {
-                const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=1&language=de`);
-                const geoData = await geoRes.json();
+                const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=1&language=de`); const geoData = await geoRes.json();
                 if(!geoData.results) { showToast("Ort nicht gefunden!", "error"); btn.innerHTML = `<i class="fa-solid fa-magnifying-glass"></i>`; return; }
                 const lat = geoData.results[0].latitude; const lon = geoData.results[0].longitude;
-                // Exakte 5-Tage Vorhersage abrufen
                 const wRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=auto&forecast_days=5`);
                 const wData = await wRes.json();
-                renderForecastGraph(wData.daily); generateSmartSuggestions(wData.daily);
-                document.getElementById('forecastContainer').style.display = 'block';
+                renderForecastGraph(wData.daily); generateSmartSuggestions(wData.daily); document.getElementById('forecastContainer').style.display = 'block';
             } catch (err) { showToast("Fehler beim Abrufen der Wetterdaten.", "error"); }
             btn.innerHTML = `<i class="fa-solid fa-magnifying-glass"></i>`;
         }
 
         function renderForecastGraph(daily) {
-            const chart = document.getElementById('forecastChart'); chart.innerHTML = '';
-            const days = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
-            
-            // Korrekte Skalierung für die Temperatur-Balken (verhindert falsche optische Höhen)
-            const globalMax = Math.max(...daily.temperature_2m_max);
-            const globalMin = Math.min(...daily.temperature_2m_min);
-            const tempRange = Math.max(globalMax - Math.min(globalMin, 0), 10); // Minimum Range von 10 Grad für Optik
-            
+            const chart = document.getElementById('forecastChart'); chart.innerHTML = ''; const days = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
+            const globalMax = Math.max(...daily.temperature_2m_max); const globalMin = Math.min(...daily.temperature_2m_min);
+            const tempRange = Math.max(globalMax - Math.min(globalMin, 0), 10); 
             for(let i=0; i<5; i++) {
                 const date = new Date(daily.time[i]); const dayName = i === 0 ? 'Heute' : days[date.getDay()];
                 const max = Math.round(daily.temperature_2m_max[i]); const min = Math.round(daily.temperature_2m_min[i]);
                 const rain = daily.precipitation_probability_max[i]; const code = daily.weathercode[i];
-
                 let icon = 'fa-cloud'; let color = '#aaa';
-                if(code === 0) { icon = 'fa-sun'; color = '#ffc107'; }
-                else if(code <= 3) { icon = 'fa-cloud-sun'; color = '#ffd54f'; }
-                else if(code <= 67) { icon = 'fa-cloud-rain'; color = '#4aa5ff'; }
-                else if(code <= 77) { icon = 'fa-snowflake'; color = '#fff'; }
-                else if(code >= 95) { icon = 'fa-cloud-bolt'; color = '#ffeb3b'; }
-
-                // Echte mathematische Prozent-Berechnung für den Balken-Graphen
+                if(code === 0) { icon = 'fa-sun'; color = '#ffc107'; } else if(code <= 3) { icon = 'fa-cloud-sun'; color = '#ffd54f'; } else if(code <= 67) { icon = 'fa-cloud-rain'; color = '#4aa5ff'; } else if(code <= 77) { icon = 'fa-snowflake'; color = '#fff'; } else if(code >= 95) { icon = 'fa-cloud-bolt'; color = '#ffeb3b'; }
                 const heightPercent = Math.max(((max - Math.min(globalMin, 0)) / tempRange) * 100, 10);
-
                 chart.innerHTML += `<div class="chart-col"><span class="chart-temp">${max}° <span style="color:var(--text-muted); font-size: 0.7rem;">${min}°</span></span><div class="bar-wrapper"><div class="temp-bar" style="height: 0%;" data-target="${heightPercent}%"></div></div><i class="fa-solid ${icon} chart-icon" style="color: ${color}"></i><span class="chart-label">${dayName}</span><span style="font-size: 0.65rem; color: #4aa5ff;">${rain}% 🌧</span></div>`;
             }
             setTimeout(() => { document.querySelectorAll('.temp-bar').forEach(bar => { bar.style.height = bar.getAttribute('data-target'); }); }, 100);
@@ -529,166 +495,50 @@
             if(luggages.length < 2) { showToast("Du brauchst mindestens 2 Gepäckstücke für diese Funktion.", "error"); return; }
             const selA = document.getElementById('transferA'); const selB = document.getElementById('transferB');
             selA.innerHTML = ''; selB.innerHTML = '';
-            luggages.forEach(l => {
-                selA.innerHTML += `<option value="${l.id}">${l.name}</option>`;
-                selB.innerHTML += `<option value="${l.id}">${l.name}</option>`;
-            });
-            // Select second item for B by default if available
-            if(luggages.length > 1) selB.selectedIndex = 1;
-            
-            document.getElementById('transferModal').classList.add('active');
+            luggages.forEach(l => { selA.innerHTML += `<option value="${l.id}">${l.name}</option>`; selB.innerHTML += `<option value="${l.id}">${l.name}</option>`; });
+            if(luggages.length > 1) selB.selectedIndex = 1; document.getElementById('transferModal').classList.add('active');
         }
 
         function executeTransfer() {
-            const idA = document.getElementById('transferA').value;
-            const idB = document.getElementById('transferB').value;
-            const type = document.getElementById('transferType').value;
-            const color = document.getElementById('transferColor').value;
-            
+            const idA = document.getElementById('transferA').value; const idB = document.getElementById('transferB').value;
+            const type = document.getElementById('transferType').value; const color = document.getElementById('transferColor').value;
             if(idA === idB) { showToast("Bitte zwei unterschiedliche Koffer wählen.", "error"); return; }
             
-            const lugA = luggages.find(l => l.id === idA);
-            const lugB = luggages.find(l => l.id === idB);
-            
-            let overlapItems = [];
-            let newItemsA = [];
-            let newItemsB = [];
-            
-            // Collect lowercase names of B
+            const lugA = luggages.find(l => l.id === idA); const lugB = luggages.find(l => l.id === idB);
+            let overlapItems = []; let newItemsA = []; let newItemsB = [];
             const bNames = lugB.items.map(i => i.name.toLowerCase().trim());
             
-            // Find overlaps in A
             lugA.items.forEach(itemA => {
-                if(bNames.includes(itemA.name.toLowerCase().trim())) {
-                    overlapItems.push({...itemA, id: Date.now().toString() + Math.random().toString(16).substr(2,4), packed: false});
-                } else {
-                    newItemsA.push(itemA);
-                }
+                if(bNames.includes(itemA.name.toLowerCase().trim())) { overlapItems.push({...itemA, id: Date.now().toString() + Math.random().toString(16).substr(2,4), packed: false}); } 
+                else { newItemsA.push(itemA); }
             });
-
             if(overlapItems.length === 0) { showToast("Keine Überschneidungen (identische Namen) gefunden.", "error"); return; }
             
-            // Remove overlaps from B
             const overlapNames = overlapItems.map(i => i.name.toLowerCase().trim());
-            lugB.items.forEach(itemB => {
-                if(!overlapNames.includes(itemB.name.toLowerCase().trim())) {
-                    newItemsB.push(itemB);
-                }
-            });
+            lugB.items.forEach(itemB => { if(!overlapNames.includes(itemB.name.toLowerCase().trim())) { newItemsB.push(itemB); } });
 
-            // Update original luggages
-            lugA.items = newItemsA;
-            lugB.items = newItemsB;
-
-            // Create transfer luggage
-            const transferLuggage = {
-                id: Date.now().toString(),
-                type: type,
-                color: color,
-                name: `Fluggepäck (${overlapItems.length} Items)`,
-                w: 40, h: 55, weight: 8, deadline: lugA.deadline || '',
-                items: overlapItems
-            };
-
-            luggages.push(transferLuggage);
-            closeModal('transferModal');
-            renderHall(); updateDashboard();
-            showToast(`Erfolgreich! ${overlapItems.length} doppelte Items ins Fluggepäck verpackt.`, "success");
+            lugA.items = newItemsA; lugB.items = newItemsB;
+            luggages.push({ id: Date.now().toString(), type: type, color: color, name: `Fluggepäck (${overlapItems.length} Items)`, w: 40, h: 55, weight: 8, deadline: lugA.deadline || '', items: overlapItems });
+            closeModal('transferModal'); renderHall(); updateDashboard(); showToast(`Erfolgreich! ${overlapItems.length} doppelte Items ins Fluggepäck verpackt.`, "success");
         }
 
 
-        // --- VOICE COMMAND (Continuous & Auto-Category) ---
-        let voiceRecognition = null;
-        let isRecording = false;
+        // --- VOICE COMMAND (Continuous & Smart NLP) ---
+        let voiceRecognition = null; let isRecording = false;
 
-        function startVoiceCommand() {
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            if (!SpeechRecognition) { showToast("Browser unterstützt kein Voice.", "error"); return; }
-            if(luggages.length === 0) { showToast("Bitte erstelle zuerst ein Gepäckstück!", "error"); return; }
-
-            const btn = document.getElementById('voiceBtn');
-
-            // Wenn es läuft: Manuell stoppen
-            if (isRecording) {
-                isRecording = false;
-                if(voiceRecognition) voiceRecognition.stop();
-                btn.classList.remove('recording'); 
-                btn.innerHTML = '<i class="fa-solid fa-microphone"></i> Sprachbefehl';
-                showToast("Diktier-Modus gestoppt.", "info");
-                return;
-            }
-
-            // Neu starten (Dauerhaftes Zuhören)
-            voiceRecognition = new SpeechRecognition();
-            voiceRecognition.lang = 'de-DE'; 
-            voiceRecognition.interimResults = false; 
-            voiceRecognition.maxAlternatives = 1;
-            voiceRecognition.continuous = true; // Der Schalter für Dauer-Zuhören
-
-            isRecording = true;
-            btn.classList.add('recording'); 
-            btn.innerHTML = '<i class="fa-solid fa-ear-listen"></i> Diktieren beenden';
-            showToast("Hört dauerhaft zu. Sprich deine Liste ein!", "info");
-
-            voiceRecognition.start();
-
-            voiceRecognition.onresult = (event) => {
-                // Bei Continuous nehmen wir das jeweils aktuellste Satz-Segment
-                const currentResultIndex = event.results.length - 1;
-                const transcript = event.results[currentResultIndex][0].transcript;
-                processSmartVoiceCommand(transcript);
-            };
-
-            voiceRecognition.onend = () => { 
-                // Auto-Restart, falls der Browser nach Stille automatisch abschaltet, wir aber nicht manuell gestoppt haben
-                if(isRecording) {
-                    voiceRecognition.start(); 
-                } else {
-                    btn.classList.remove('recording'); 
-                    btn.innerHTML = '<i class="fa-solid fa-microphone"></i> Sprachbefehl';
-                }
-            };
-            
-            voiceRecognition.onerror = (e) => {
-                if (e.error !== 'no-speech') {
-                    showToast("Mikrofonfehler: " + e.error, "error");
-                    isRecording = false;
-                }
-            };
-        }
-
-        // --- SMART VOICE FORMATTING & CATEGORIZATION ---
-        
         function formatSpokenItem(text) {
-            // 1. Zahlwörter in Ziffern umwandeln
             const numMap = { "ein": "1", "eine": "1", "einen": "1", "einem": "1", "eins": "1", "zwei": "2", "zwo": "2", "drei": "3", "vier": "4", "fünf": "5", "sechs": "6", "sieben": "7", "acht": "8", "neun": "9", "zehn": "10", "elf": "11", "zwölf": "12" };
-            
-            let words = text.split(" ").map(w => {
-                let lower = w.toLowerCase();
-                if (numMap[lower]) return numMap[lower];
-                return w;
-            });
-
-            // 2. Akronyme / Buchstabiertes groß schreiben (z.B. rl -> RL)
+            let words = text.split(" ").map(w => { let lower = w.toLowerCase(); if (numMap[lower]) return numMap[lower]; return w; });
             const stopWords = ["in", "an", "am", "im", "um", "zu", "ab", "da", "so", "wo", "ja", "ob", "du", "er", "es", "sie"];
             words = words.map(w => {
                 let cleanWord = w.replace(/[^a-zA-ZäöüÄÖÜß]/g, '');
-                // Wenn das Wort nur 1-2 Buchstaben hat und kein Füllwort ist -> GROSSSCHREIBEN
-                if (cleanWord.length > 0 && cleanWord.length <= 2 && !stopWords.includes(cleanWord.toLowerCase())) {
-                    return w.toUpperCase();
-                }
-                return w;
+                if (cleanWord.length > 0 && cleanWord.length <= 2 && !stopWords.includes(cleanWord.toLowerCase())) { return w.toUpperCase(); } return w;
             });
-
-            let formatted = words.join(" ");
-            // Erster Buchstabe groß
-            return formatted.charAt(0).toUpperCase() + formatted.slice(1);
+            let formatted = words.join(" "); return formatted.charAt(0).toUpperCase() + formatted.slice(1);
         }
 
         function findBestCategory(itemName, availableCategories) {
             const lowerItem = itemName.toLowerCase();
-            
-            // Wörterbuch: Was gehört zu welcher Basis-Gruppe?
             const keywordMap = {
                 "Kleidung": ["hose", "shirt", "hemd", "jacke", "socken", "schuhe", "kleid", "pullover", "pulli", "unterwäsche", "bh", "slip", "badehose", "bikini", "mütze", "schal", "gürtel"],
                 "Hygiene": ["zahnbürste", "zahncreme", "shampoo", "duschgel", "deo", "parfüm", "creme", "pflege", "rasierer", "seife", "handtuch", "bürste", "kamm"],
@@ -697,14 +547,9 @@
                 "Snacks": ["schokolade", "snack", "wasser", "brot", "apfel", "keks", "riegel", "bonbon", "getränk", "essen", "nahrung"],
                 "Apotheke": ["tablette", "pille", "pflaster", "verband", "medizin", "aspirin", "tropfen", "spray"]
             };
-
             let idealGroup = null;
-            for (const [group, keywords] of Object.entries(keywordMap)) {
-                if (keywords.some(kw => lowerItem.includes(kw))) { idealGroup = group; break; }
-            }
-
+            for (const [group, keywords] of Object.entries(keywordMap)) { if (keywords.some(kw => lowerItem.includes(kw))) { idealGroup = group; break; } }
             if (idealGroup) {
-                // Synonyme für die Nutzer-Kategorien (Findet "Snacks", auch wenn der Nutzer "Essen" oder "Verpflegung" erstellt hat)
                 const groupSynonyms = {
                     "Kleidung": ["kleidung", "klamotten", "anziehsachen", "gewand"],
                     "Hygiene": ["hygiene", "bad", "waschzeug", "kosmetik", "pflege", "kulturbeutel"],
@@ -713,58 +558,51 @@
                     "Snacks": ["essen", "snacks", "verpflegung", "nahrung", "proviant", "lebensmittel"],
                     "Apotheke": ["medikamente", "apotheke", "gesundheit", "erste hilfe"]
                 };
-
                 const targetSynonyms = groupSynonyms[idealGroup];
-                for (let cat of availableCategories) {
-                    if (targetSynonyms.some(syn => cat.toLowerCase().includes(syn))) {
-                        return cat; // Perfekte Nutzer-Kategorie gefunden!
-                    }
-                }
+                for (let cat of availableCategories) { if (targetSynonyms.some(syn => cat.toLowerCase().includes(syn))) { return cat; } }
             }
-            
-            // Fallback: Wenn nichts passt, nimm die erste verfügbare Kategorie
             return availableCategories[0];
         }
 
+        function startVoiceCommand() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) { showToast("Browser unterstützt kein Voice.", "error"); return; }
+            if(luggages.length === 0) { showToast("Bitte erstelle zuerst ein Gepäckstück!", "error"); return; }
+
+            const btn = document.getElementById('voiceBtn');
+            if (isRecording) {
+                isRecording = false; if(voiceRecognition) voiceRecognition.stop();
+                btn.classList.remove('recording'); btn.innerHTML = '<i class="fa-solid fa-microphone"></i> Sprachbefehl'; showToast("Diktier-Modus gestoppt.", "info"); return;
+            }
+
+            voiceRecognition = new SpeechRecognition(); voiceRecognition.lang = 'de-DE'; voiceRecognition.interimResults = false; voiceRecognition.maxAlternatives = 1; voiceRecognition.continuous = true;
+            isRecording = true; btn.classList.add('recording'); btn.innerHTML = '<i class="fa-solid fa-ear-listen"></i> Beenden'; showToast("Hört dauerhaft zu.", "info");
+            voiceRecognition.start();
+
+            voiceRecognition.onresult = (event) => { const transcript = event.results[event.results.length - 1][0].transcript; processSmartVoiceCommand(transcript); };
+            voiceRecognition.onend = () => { if(isRecording) { voiceRecognition.start(); } else { btn.classList.remove('recording'); btn.innerHTML = '<i class="fa-solid fa-microphone"></i> Sprachbefehl'; } };
+            voiceRecognition.onerror = (e) => { if (e.error !== 'no-speech') { showToast("Mikrofonfehler: " + e.error, "error"); isRecording = false; } };
+        }
+
         function processSmartVoiceCommand(transcript) {
-            let text = transcript.toLowerCase().trim();
-            // Störwörter entfernen
-            text = text.replace(/bitte/g, '').replace(/einmal/g, '').replace(/hinzu$/i, '').trim();
+            let text = transcript.toLowerCase().trim().replace(/bitte/g, '').replace(/einmal/g, '').replace(/hinzu$/i, '').trim();
             text = text.replace(/^(füge|packe|tu|lege|schreibe)\s+(eine|einen|ein|den|die|das)?\s*/i, '');
-            
             let rawItemName = text; let luggageQuery = "";
             const splitMatch = text.match(/(.+?)\s+(in den|in die|in das|in|zu dem|zu der|zum|zur|zu|auf den|auf)\s+(.+)/i);
-            
-            if(splitMatch) { 
-                rawItemName = splitMatch[1].trim(); 
-                luggageQuery = splitMatch[3].trim(); 
-            }
-            
-            if(!rawItemName) return; // Bei Dauerdiktat stille Fehler ignorieren
+            if(splitMatch) { rawItemName = splitMatch[1].trim(); luggageQuery = splitMatch[3].trim(); }
+            if(!rawItemName) return; 
 
-            // KI-Formatierung anwenden (Zahlen, Akronyme)
             let itemName = formatSpokenItem(rawItemName);
-
-            // Koffer-Zuordnung
             let targetLuggage = null;
-            if(luggageQuery) { 
-                const searchWords = luggageQuery.split(' '); 
-                targetLuggage = luggages.find(l => searchWords.some(w => w.length > 2 && l.name.toLowerCase().includes(w))); 
-            }
+            if(luggageQuery) { const searchWords = luggageQuery.split(' '); targetLuggage = luggages.find(l => searchWords.some(w => w.length > 2 && l.name.toLowerCase().includes(w))); }
             if(!targetLuggage && luggages.length > 0) targetLuggage = luggages[0];
 
             if(targetLuggage) {
-                // KI-Kategorisierung anwenden
                 let autoCat = findBestCategory(itemName, categories);
-
                 targetLuggage.items.push({ id: Date.now().toString(), name: itemName, cat: autoCat, packed: false });
                 showToast(`"${itemName}" in ${targetLuggage.name} gepackt`);
-                
-                renderHall(); updateDashboard(); 
-                if(currentOpenLuggageId === targetLuggage.id) renderModalContent();
-            } else { 
-                showToast("Gepäck nicht gefunden.", "error"); 
-            }
+                renderHall(); updateDashboard(); if(currentOpenLuggageId === targetLuggage.id) renderModalContent();
+            } else { showToast("Gepäck nicht gefunden.", "error"); }
         }
 
         // --- DASHBOARD ---
@@ -824,9 +662,16 @@
 
             luggages.forEach(l => {
                 const scale = 3.5; const calcWidth = Math.max(l.w * scale, 120); const calcHeight = Math.max(l.h * scale, 140);
-                let icon = l.type === 'rucksack' ? 'fa-backpack' : (l.type === 'koffer' ? 'fa-suitcase' : 'fa-suitcase-rolling');
+                
+                let icon = 'fa-suitcase-rolling';
+                if(l.type === 'rucksack') icon = 'fa-backpack';
+                else if(l.type === 'koffer') icon = 'fa-suitcase';
+                else if(l.type === 'waschbeutel') icon = 'fa-pump-soap';
+
                 const t = l.items.length; const p = l.items.filter(i => i.packed).length; const percent = t === 0 ? 0 : (p / t) * 100;
-                let details = ''; if(l.type === 'koffer') details = '<div class="koffer-strap"></div><div class="koffer-strap-2"></div>';
+                
+                let details = ''; 
+                if(l.type === 'koffer') details = '<div class="koffer-strap"></div><div class="koffer-strap-2"></div>';
 
                 const baseColor = l.color || '#ffffff';
                 const glassBg = hexToRgbA(baseColor, 0.08); const glassBorder = hexToRgbA(baseColor, 0.3);
@@ -856,7 +701,11 @@
             const lug = luggages.find(l => l.id === currentOpenLuggageId);
             if(!lug) return;
 
-            let icon = lug.type === 'rucksack' ? 'fa-backpack' : (lug.type === 'koffer' ? 'fa-suitcase' : 'fa-suitcase-rolling');
+            let icon = 'fa-suitcase-rolling';
+            if(lug.type === 'rucksack') icon = 'fa-backpack';
+            else if(lug.type === 'koffer') icon = 'fa-suitcase';
+            else if(lug.type === 'waschbeutel') icon = 'fa-pump-soap';
+
             document.getElementById('modalTitle').innerHTML = `<i class="fa-solid ${icon}"></i> ${lug.name}`;
             document.getElementById('modalDim').innerHTML = `<i class="fa-solid fa-ruler-combined"></i> ${lug.w}x${lug.h} cm`;
             document.getElementById('modalWeight').innerHTML = `<i class="fa-solid fa-weight-scale"></i> max ${lug.weight} kg`;
@@ -926,7 +775,14 @@
                 } else if(lug.type === 'koffer') {
                     doc.roundedRect(startX, currentY+5, visW, visH, 2, 2, 'FD'); doc.rect(startX+visW, currentY+15, 3, 15, 'S');
                     doc.setFillColor(0,0,0); doc.globalAlpha = 0.5; doc.rect(startX+(visW*0.3), currentY+5, 4, visH, 'F'); doc.globalAlpha = 1.0;
-                } else {
+                } else if(lug.type === 'waschbeutel') {
+                    // Neues Waschbeutel Vektor Design für das PDF
+                    doc.roundedRect(startX, currentY+5, visW, visH, 4, 4, 'FD'); 
+                    doc.setDrawColor(255,255,255); doc.globalAlpha = 0.4; doc.setLineDashPattern([2, 2], 0);
+                    doc.line(startX, currentY+5+(visH*0.2), startX+visW, currentY+5+(visH*0.2)); // Reißverschluss
+                    doc.setLineDashPattern([], 0); doc.globalAlpha = 1.0; doc.setDrawColor(50, 50, 50);
+                    doc.rect(startX-4, currentY+5+(visH*0.3), 4, visH*0.3, 'S'); // Schlaufe
+                } else { // Rucksack
                     doc.roundedRect(startX, currentY+5, visW, visH, 8, 8, 'FD'); doc.rect(startX+(visW/2)-5, currentY+1, 10, 4, 'S');
                     doc.setFillColor(255,255,255); doc.globalAlpha = 0.2; doc.roundedRect(startX+(visW*0.15), currentY+15, visW*0.7, visH*0.5, 3, 3, 'F'); doc.globalAlpha = 1.0;
                 }
@@ -937,7 +793,7 @@
                 if(lug.deadline) { doc.text(`Frist: ${new Date(lug.deadline).toLocaleDateString('de-DE')}`, startX, currentY + visH + 35); }
 
                 const tableData = [...lug.items].sort((a,b) => a.cat.localeCompare(b.cat)).map(i => [i.packed ? "[ X ]" : "[   ]", i.cat, i.name]);
-                if(tableData.length === 0) tableData.push(["-", "-", "Koffer ist leer."]);
+                if(tableData.length === 0) tableData.push(["-", "-", "Leer."]);
 
                 doc.autoTable({
                     startY: currentY, margin: { left: startX + 60 }, head: [['St.', 'Kategorie', 'Gegenstand']], body: tableData, theme: 'grid',
